@@ -42,16 +42,16 @@ public class SubirDatoLaboratorioService {
                     byte [] bytes = file.getBytes();
                     Path path = Paths.get(file.getOriginalFilename());
                     Files.write(path, bytes);
-                    logg.info("Archivo guardado");
+                    logg.info("Archivo de analisis del Laboratiorio guardado");
                 }
                 catch (IOException e){
                     logg.error("Error", e);
                 }
             }
-            return "Archivo guardado";
+            return "Archivo de analisis del Laboratiorio guardado";
         }
         else {
-            return "No se guardo el Archivo";
+            return "No se guardo el Archivo de analisis del Laboratiorio";
         }
     }
 
@@ -75,9 +75,9 @@ public class SubirDatoLaboratorioService {
                 }
             }
             texto = temp;
-            System.out.println("Archivo leido exitosamente");
+            System.out.println("Archivo de analisis del Laboratiorio leido exitosamente");
         }catch(Exception e){
-            System.err.println("No se encontro el archivo");
+            System.err.println("No se encontro el archivo de analisis del Laboratiorio");
         }finally{
             if(bf != null){
                 try{
@@ -89,8 +89,8 @@ public class SubirDatoLaboratorioService {
         }
     }
 
-    public void guardarDato(SubirDatoLaboratorioEntity dato){
-        subirDatoLaboratorioRepository.save(dato);
+    public void guardarDato(SubirDatoLaboratorioEntity data){
+        subirDatoLaboratorioRepository.save(data);
     }
 
     public void guardarDatoDB(String proveedor, String porcentaje_grasa, String porcentaje_solido_total){
