@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.ArrayList;
 
 @Controller
-@RequestMapping("/proveedor")
+@RequestMapping
 public class ProveedorController {
     @Autowired
     ProveedorService proveedorService;
 
     @GetMapping("/obtenerProveedores")
-    public String obtenerProveedores(Model model) {
+    public String listarProveedores(Model model) {
         ArrayList<ProveedorEntity> proveedores = proveedorService.obtenerProveedores();
         model.addAttribute("proveedores", proveedores);
         return "index";
@@ -43,6 +43,6 @@ public class ProveedorController {
                                    @RequestParam("retencion") String retencion,
                                    @RequestParam("pagoTotal") int pagoTotal) {
         proveedorService.guardarProveedor(codigo, nombre, categoria, retencion, pagoTotal);
-        return "redirect:/proveedor/nuevoProveedor";
+        return "redirect:/nuevoProveedor";
     }
 }

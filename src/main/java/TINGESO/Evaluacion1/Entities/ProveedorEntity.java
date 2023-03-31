@@ -1,11 +1,12 @@
 package TINGESO.Evaluacion1.Entities;
 
-
 import jakarta.persistence.*;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+
+
 
 @Entity
 @Table(name = "proveedor")
@@ -15,12 +16,8 @@ import lombok.AllArgsConstructor;
 
 public class ProveedorEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(unique = true, nullable = false)
-    private int id;
     private String codigo;
     private String nombre;
     private String categoria;
     private String retencion;
-    private int pagoTotal;
 }

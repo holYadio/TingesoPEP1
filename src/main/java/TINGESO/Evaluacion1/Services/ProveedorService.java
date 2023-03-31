@@ -26,7 +26,6 @@ public class ProveedorService {
         proveedor.setNombre(nombre);
         proveedor.setCategoria(categoria);
         proveedor.setRetencion(retencion);
-        proveedor.setPagoTotal(0);
         return proveedorRepository.save(proveedor);
     }
 }
