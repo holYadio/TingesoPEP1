@@ -19,17 +19,17 @@ public class ProveedorController {
     ProveedorService proveedorService;
 
     @GetMapping("/obtenerProveedores")
-    public String listarProveedores(Model model) {
+    public String listar(Model model) {
         ArrayList<ProveedorEntity> proveedores = proveedorService.obtenerProveedores();
         model.addAttribute("proveedores", proveedores);
-        return "index";
+        return "listadoProveedores";
     }
 
     @GetMapping("/obtenerProveedorPorCodigo")
     public String obtenerProveedorPorCodigo(@RequestParam("codigo") String codigo, Model model) {
         ProveedorEntity proveedor = proveedorService.obtenerProveedorPorCodigo(codigo);
         model.addAttribute("proveedor", proveedor);
-        return "index";
+        return "listadoProveedores";
     }
     @GetMapping("/nuevoProveedor")
     public String nuevoProveedor() {
@@ -40,9 +40,8 @@ public class ProveedorController {
     public String guardarProveedor(@RequestParam("codigo") String codigo,
                                    @RequestParam("nombre") String nombre,
                                    @RequestParam("categoria") String categoria,
-                                   @RequestParam("retencion") String retencion,
-                                   @RequestParam("pagoTotal") int pagoTotal) {
-        proveedorService.guardarProveedor(codigo, nombre, categoria, retencion, pagoTotal);
+                                   @RequestParam("retencion") String retencion) {
+        proveedorService.guardarProveedor(codigo, nombre, categoria, retencion);
         return "redirect:/nuevoProveedor";
     }
 }

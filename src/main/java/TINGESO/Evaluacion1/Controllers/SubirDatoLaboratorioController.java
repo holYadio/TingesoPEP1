@@ -22,14 +22,14 @@ public class SubirDatoLaboratorioController {
 
     @GetMapping("/SubirDatosLaboratorio")
     public String fileUpload() {
-        return "SubirDatosLaboratorio";
+        return "importarLab";
     }
     @PostMapping("/SubirDatosLaboratorio")
     public String fileUpload(@RequestParam("file")MultipartFile file, RedirectAttributes redirectAttributes){
         subirDatoLaboratorioService.guardarDatosLab(file);
         redirectAttributes.addFlashAttribute("mensaje", "Archivo subido correctamente");
         subirDatoLaboratorioService.leerCsv("lab.csv");
-        return "redirect:/SubirDatosLaboratorio";
+        return "redirect:/importarLab";
     }
 
     @GetMapping("/obtenerDatosLab")

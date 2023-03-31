@@ -23,7 +23,7 @@ public class SubirDatoProveedorController {
 
     @GetMapping("/SubirDatosProveedor")
     public String fileUpload() {
-        return "SubirDatosProveedor";
+        return "importarAcopio";
     }
 
     @PostMapping("/SubirDatosProveedor")
@@ -31,7 +31,7 @@ public class SubirDatoProveedorController {
         subirDatoProveedorService.guardarDatosProveedor(file);
         redirectAttributes.addFlashAttribute("mensaje", "Archivo subido correctamente");
         subirDatoProveedorService.leerCsvProveedor("Acopio.csv");
-        return "redirect:/SubirDatosProveedor";
+        return "redirect:/importarAcopio";
     }
 
     @GetMapping("/obtenerDatosProveedor")

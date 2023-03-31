@@ -20,7 +20,7 @@ public class ProveedorService {
         return proveedorRepository.findByCodigo(codigo);
     }
 
-    public ProveedorEntity guardarProveedor(String codigo, String nombre, String categoria, String retencion, int pagoTotal) {
+    public ProveedorEntity guardarProveedor(String codigo, String nombre, String categoria, String retencion) {
         ProveedorEntity proveedor = new ProveedorEntity();
         proveedor.setCodigo(codigo);
         proveedor.setNombre(nombre);
