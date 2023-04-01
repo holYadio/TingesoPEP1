@@ -56,10 +56,9 @@ public class SubirDatoLaboratorioService {
     }
 
     @Generated
-    public void leerCsv(String direccion){
+    public void leerCsv(String direccion, String quincena){
         String texto = "";
         BufferedReader bf = null;
-        subirDatoLaboratorioRepository.deleteAll();
         try{
             bf = new BufferedReader(new FileReader(direccion));
             String temp = "";
@@ -70,7 +69,7 @@ public class SubirDatoLaboratorioService {
                     count = 0;
                 }
                 else{
-                    guardarDatoDB(bfRead.split(";")[0], bfRead.split(";")[1], bfRead.split(";")[2]);
+                    guardarDatoDB(bfRead.split(";")[0], bfRead.split(";")[1], bfRead.split(";")[2],quincena);
                     temp = temp + "\n" + bfRead;
                 }
             }
@@ -93,11 +92,12 @@ public class SubirDatoLaboratorioService {
         subirDatoLaboratorioRepository.save(data);
     }
 
-    public void guardarDatoDB(String proveedor, String porcentaje_grasa, String porcentaje_solido_total){
+    public void guardarDatoDB(String proveedor, String porcentaje_grasa, String porcentaje_solido_total, String quincena){
         SubirDatoLaboratorioEntity newData = new SubirDatoLaboratorioEntity();
         newData.setProveedor(proveedor);
         newData.setPorcentaje_grasa(porcentaje_grasa);
         newData.setPorcentaje_solido_total(porcentaje_solido_total);
+        newData.setQuincena(quincena);
         guardarDato(newData);
     }
 }

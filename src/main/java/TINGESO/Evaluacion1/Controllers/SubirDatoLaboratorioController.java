@@ -25,17 +25,19 @@ public class SubirDatoLaboratorioController {
         return "importarLab";
     }
     @PostMapping("/SubirDatosLaboratorio")
-    public String fileUpload(@RequestParam("file")MultipartFile file, RedirectAttributes redirectAttributes){
+    public String fileUpload(@RequestParam("file")MultipartFile file,
+                             @RequestParam("Quincena")String Quincena ,
+                             RedirectAttributes redirectAttributes){
         subirDatoLaboratorioService.guardarDatosLab(file);
         redirectAttributes.addFlashAttribute("mensaje", "Archivo subido correctamente");
-        subirDatoLaboratorioService.leerCsv("lab.csv");
-        return "redirect:/importarLab";
+        subirDatoLaboratorioService.leerCsv(file.getOriginalFilename(), Quincena);
+        return "redirect:/SubirDatosLaboratorio";
     }
 
     @GetMapping("/obtenerDatosLab")
     public String obtenerDatosLab(Model model){
         ArrayList<SubirDatoLaboratorioEntity> datosLab = subirDatoLaboratorioService.obtenerSubirDatosLaboratorio();
         model.addAttribute("datosLab", datosLab);
-        return "obtenerDatosLab";
+        return "informacionLab";
     }
 }

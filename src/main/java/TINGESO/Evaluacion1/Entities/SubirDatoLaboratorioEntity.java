@@ -18,4 +18,5 @@ public class SubirDatoLaboratorioEntity {
     private String proveedor;
     private String porcentaje_grasa;
     private String porcentaje_solido_total;
+    private String quincena;
 }

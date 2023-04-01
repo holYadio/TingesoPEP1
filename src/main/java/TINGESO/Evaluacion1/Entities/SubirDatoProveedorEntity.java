@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 
 @Entity
 @Table(name = "dato_proveedor")
@@ -12,8 +13,8 @@ import lombok.NoArgsConstructor;
 @Data
 public class SubirDatoProveedorEntity {
     @Id
+    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(unique = true, nullable = false)
     private int id;
     private String fecha;
     private String turno;

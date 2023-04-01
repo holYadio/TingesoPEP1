@@ -59,7 +59,6 @@ public class SubirDatoProveedorService {
     public void leerCsvProveedor(String Direccion){
         String texto = "";
         BufferedReader bf = null;
-        subirDatoProveedorRepository.deleteAll();
         try{
             bf = new BufferedReader(new FileReader(Direccion));
             String temp = "";
@@ -70,7 +69,7 @@ public class SubirDatoProveedorService {
                     count = 0;
                 }
                 else {
-                    guardarDatoProveedorDB(bfRead.split(",")[0], bfRead.split(",")[1], bfRead.split(",")[2], bfRead.split(",")[3]);
+                    guardarDatoProveedorDB(bfRead.split(";")[0], bfRead.split(";")[1], bfRead.split(";")[2], bfRead.split(";")[3]);
                     temp = temp + "\n" + bfRead;
                 }
             }

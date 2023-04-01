@@ -30,14 +30,14 @@ public class SubirDatoProveedorController {
     public String fileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes){
         subirDatoProveedorService.guardarDatosProveedor(file);
         redirectAttributes.addFlashAttribute("mensaje", "Archivo subido correctamente");
-        subirDatoProveedorService.leerCsvProveedor("Acopio.csv");
-        return "redirect:/importarAcopio";
+        subirDatoProveedorService.leerCsvProveedor(file.getOriginalFilename());
+        return "redirect:/SubirDatosProveedor";
     }
 
     @GetMapping("/obtenerDatosProveedor")
     public String obtenerDatosProveedor(Model model){
         ArrayList<SubirDatoProveedorEntity> datosProveedor = subirDatoProveedorService.obtenerSubirDatosProveedores();
         model.addAttribute("datosProveedor", datosProveedor);
-        return "obtenerDatosProveedor";
+        return "informacionAcopio";
     }
 }
