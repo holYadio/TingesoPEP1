@@ -25,12 +25,7 @@ public class ProveedorController {
         return "listadoProveedores";
     }
 
-    @GetMapping("/obtenerProveedorPorCodigo")
-    public String obtenerProveedorPorCodigo(@RequestParam("codigo") String codigo, Model model) {
-        ArrayList<ProveedorEntity> proveedor = proveedorService.obtenerProveedorPorCodigo(codigo);
-        model.addAttribute("proveedor", proveedor);
-        return "listadoProveedores";
-    }
+
     @GetMapping("/nuevoProveedor")
     public String nuevoProveedor() {
         return "nuevoProveedor";

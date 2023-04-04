@@ -32,6 +32,10 @@ public class DatosLaboratorioService {
         return datosLaboratorioRepository.findByProveedor(proveedor);
     }
 
+    public DatosLaboratorioEntity obtenerDatosLaboratorioPorProveedorYQuincena(String proveedor, String quincena) {
+        return datosLaboratorioRepository.findByProveedorAndQuincena(proveedor, quincena);
+    }
+
     @Generated
     public String guardarDatosLab(MultipartFile file){
         String fileName = file.getOriginalFilename();
@@ -99,6 +103,7 @@ public class DatosLaboratorioService {
         newData.setQuincena(quincena);
         guardarDato(newData);
     }
+
 
 
 }
