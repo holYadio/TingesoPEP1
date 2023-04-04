@@ -1,8 +1,7 @@
 package TINGESO.Evaluacion1.Services;
 
-import TINGESO.Evaluacion1.Entities.ProveedorEntity;
-import TINGESO.Evaluacion1.Entities.SubirDatoLaboratorioEntity;
-import TINGESO.Evaluacion1.Repositories.SubirDatoLaboratorioRepository;
+import TINGESO.Evaluacion1.Entities.DatosLaboratorioEntity;
+import TINGESO.Evaluacion1.Repositories.DatosLaboratorioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
@@ -19,18 +18,18 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 @Service
-public class SubirDatoLaboratorioService {
+public class DatosLaboratorioService {
     @Autowired
-    SubirDatoLaboratorioRepository subirDatoLaboratorioRepository;
+    DatosLaboratorioRepository datosLaboratorioRepository;
 
-    private final Logger logg = LoggerFactory.getLogger(SubirDatoLaboratorioService.class);
+    private final Logger logg = LoggerFactory.getLogger(DatosLaboratorioService.class);
 
-    public ArrayList<SubirDatoLaboratorioEntity> obtenerSubirDatosLaboratorio() {
-        return (ArrayList<SubirDatoLaboratorioEntity>) subirDatoLaboratorioRepository.findAll();
+    public ArrayList<DatosLaboratorioEntity> obtenerDatosLaboratorio() {
+        return (ArrayList<DatosLaboratorioEntity>) datosLaboratorioRepository.findAll();
     }
 
-    public SubirDatoLaboratorioEntity obtenerSubirDatoLaboratorioPorProveedor(String proveedor) {
-        return subirDatoLaboratorioRepository.findByProveedor(proveedor);
+    public ArrayList<DatosLaboratorioEntity> obtenerDatosLaboratorioPorProveedor(String proveedor) {
+        return datosLaboratorioRepository.findByProveedor(proveedor);
     }
 
     @Generated
@@ -88,16 +87,18 @@ public class SubirDatoLaboratorioService {
         }
     }
 
-    public void guardarDato(SubirDatoLaboratorioEntity data){
-        subirDatoLaboratorioRepository.save(data);
+    public void guardarDato(DatosLaboratorioEntity data){
+        datosLaboratorioRepository.save(data);
     }
 
     public void guardarDatoDB(String proveedor, String porcentaje_grasa, String porcentaje_solido_total, String quincena){
-        SubirDatoLaboratorioEntity newData = new SubirDatoLaboratorioEntity();
+        DatosLaboratorioEntity newData = new DatosLaboratorioEntity();
         newData.setProveedor(proveedor);
         newData.setPorcentaje_grasa(porcentaje_grasa);
         newData.setPorcentaje_solido_total(porcentaje_solido_total);
         newData.setQuincena(quincena);
         guardarDato(newData);
     }
+
+
 }

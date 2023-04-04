@@ -4,19 +4,20 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 
 @Entity
-@Data
-@Table(name = "dato_laboratorio")
+@Table(name = "dato_proveedor")
 @NoArgsConstructor
 @AllArgsConstructor
-public class SubirDatoLaboratorioEntity {
+@Data
+public class DatosAcopioEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
     private int id;
+    private String fecha;
+    private String turno;
     private String proveedor;
-    private String porcentaje_grasa;
-    private String porcentaje_solido_total;
-    private String quincena;
+    private String kls_leche;
 }

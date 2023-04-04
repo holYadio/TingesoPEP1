@@ -1,8 +1,7 @@
 package TINGESO.Evaluacion1.Services;
 
-import TINGESO.Evaluacion1.Entities.SubirDatoLaboratorioEntity;
-import TINGESO.Evaluacion1.Repositories.SubirDatoProveedorRepository;
-import TINGESO.Evaluacion1.Entities.SubirDatoProveedorEntity;
+import TINGESO.Evaluacion1.Entities.DatosAcopioEntity;
+import TINGESO.Evaluacion1.Repositories.DatosAcopioRepository;
 import lombok.Generated;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,18 +18,46 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 @Service
-public class SubirDatoProveedorService {
+public class DatosAcopioService {
     @Autowired
-    SubirDatoProveedorRepository subirDatoProveedorRepository;
+    DatosAcopioRepository datosAcopioRepository;
 
-    private final Logger logg = LoggerFactory.getLogger(SubirDatoProveedorService.class);
+    private final Logger logg = LoggerFactory.getLogger(DatosAcopioService.class);
 
-    public ArrayList<SubirDatoProveedorEntity> obtenerSubirDatosProveedores() {
-        return (ArrayList<SubirDatoProveedorEntity>) subirDatoProveedorRepository.findAll();
+    public ArrayList<DatosAcopioEntity> obtenerDatosAcopio() {
+        return (ArrayList<DatosAcopioEntity>) datosAcopioRepository.findAll();
     }
 
-    public SubirDatoProveedorEntity obtenerSubirDatoProveedorPorProveedor(String proveedor) {
-        return subirDatoProveedorRepository.findByProveedor(proveedor);
+    public ArrayList<DatosAcopioEntity> obtenerDatosAcopioPorProveedor(String proveedor) {
+        return (ArrayList<DatosAcopioEntity>) datosAcopioRepository.findByProveedor(proveedor);
+    }
+
+    /* Funcion para obtener los acopios asociados a una quincena en especifico
+     * @param Quincena: String con el formato "AAAA/MM/Q1" o "AAAA/MM/Q2"
+     * @return ArrayList<DatosAcopioEntity> con los datos de los acopios asociados a la quincena
+     */
+    public ArrayList<DatosAcopioEntity> obtenerDatosAcopioPorQuincenayProveedor(String Quincena, String proveedor) {
+        ArrayList<DatosAcopioEntity> datosAcopio = (ArrayList<DatosAcopioEntity>) datosAcopioRepository.findAll();
+        ArrayList<DatosAcopioEntity> datosAcopioPorQuincena = new ArrayList<>();
+        int anioQuincena = Integer.parseInt(Quincena.split("/")[0]);
+        int mesQuincena = Integer.parseInt(Quincena.split("/")[1]);
+        String numQuincena = Quincena.split("/")[2];
+        for (DatosAcopioEntity datosAcopioEntity : datosAcopio) {
+            String fechaDatoAcopio = datosAcopioEntity.getFecha();
+            int anio = Integer.parseInt(fechaDatoAcopio.split("/")[0]);
+            int mes = Integer.parseInt(fechaDatoAcopio.split("/")[1]);
+            int dia = Integer.parseInt(fechaDatoAcopio.split("/")[2]);
+            if (numQuincena.equals("Q1")) {
+                if (anio == anioQuincena && mes == mesQuincena && (dia <= 15) && (dia >= 1) && datosAcopioEntity.getProveedor().equals(proveedor)) {
+                    datosAcopioPorQuincena.add(datosAcopioEntity);
+                }
+            }else if (numQuincena.equals("Q2")) {
+                if (anio == anioQuincena && mes == mesQuincena && (dia <= 31) && (dia >= 16) && datosAcopioEntity.getProveedor().equals(proveedor)) {
+                    datosAcopioPorQuincena.add(datosAcopioEntity);
+                }
+            }
+        }
+        return datosAcopioPorQuincena;
     }
 
     @Generated
@@ -91,12 +118,12 @@ public class SubirDatoProveedorService {
         }
     }
 
-    public void guardarDatoProveedor(SubirDatoProveedorEntity dato) {
-        subirDatoProveedorRepository.save(dato);
+    public void guardarDatoProveedor(DatosAcopioEntity dato) {
+        datosAcopioRepository.save(dato);
     }
 
     public void guardarDatoProveedorDB(String fecha, String turno, String proveedor, String kls_leche){
-        SubirDatoProveedorEntity newDato = new SubirDatoProveedorEntity();
+        DatosAcopioEntity newDato = new DatosAcopioEntity();
         newDato.setFecha(fecha);
         newDato.setTurno(turno);
         newDato.setProveedor(proveedor);

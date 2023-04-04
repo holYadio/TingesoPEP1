@@ -1,7 +1,7 @@
 package TINGESO.Evaluacion1.Controllers;
 
-import TINGESO.Evaluacion1.Entities.SubirDatoLaboratorioEntity;
-import TINGESO.Evaluacion1.Services.SubirDatoLaboratorioService;
+import TINGESO.Evaluacion1.Entities.DatosLaboratorioEntity;
+import TINGESO.Evaluacion1.Services.DatosLaboratorioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,9 +16,9 @@ import java.util.ArrayList;
 
 @Controller
 @RequestMapping
-public class SubirDatoLaboratorioController {
+public class DatosLaboratorioController {
     @Autowired
-    SubirDatoLaboratorioService subirDatoLaboratorioService;
+    DatosLaboratorioService datosLaboratorioService;
 
     @GetMapping("/SubirDatosLaboratorio")
     public String fileUpload() {
@@ -28,15 +28,15 @@ public class SubirDatoLaboratorioController {
     public String fileUpload(@RequestParam("file")MultipartFile file,
                              @RequestParam("Quincena")String Quincena ,
                              RedirectAttributes redirectAttributes){
-        subirDatoLaboratorioService.guardarDatosLab(file);
+        datosLaboratorioService.guardarDatosLab(file);
         redirectAttributes.addFlashAttribute("mensaje", "Archivo subido correctamente");
-        subirDatoLaboratorioService.leerCsv(file.getOriginalFilename(), Quincena);
+        datosLaboratorioService.leerCsv(file.getOriginalFilename(), Quincena);
         return "redirect:/SubirDatosLaboratorio";
     }
 
     @GetMapping("/obtenerDatosLab")
     public String obtenerDatosLab(Model model){
-        ArrayList<SubirDatoLaboratorioEntity> datosLab = subirDatoLaboratorioService.obtenerSubirDatosLaboratorio();
+        ArrayList<DatosLaboratorioEntity> datosLab = datosLaboratorioService.obtenerDatosLaboratorio();
         model.addAttribute("datosLab", datosLab);
         return "informacionLab";
     }

@@ -1,8 +1,8 @@
 package TINGESO.Evaluacion1.Controllers;
 
 
-import TINGESO.Evaluacion1.Entities.SubirDatoProveedorEntity;
-import TINGESO.Evaluacion1.Services.SubirDatoProveedorService;
+import TINGESO.Evaluacion1.Entities.DatosAcopioEntity;
+import TINGESO.Evaluacion1.Services.DatosAcopioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,9 +17,9 @@ import java.util.ArrayList;
 
 @Controller
 @RequestMapping
-public class SubirDatoProveedorController {
+public class DatosAcopioController {
     @Autowired
-    SubirDatoProveedorService subirDatoProveedorService;
+    DatosAcopioService datosAcopioService;
 
     @GetMapping("/SubirDatosProveedor")
     public String fileUpload() {
@@ -28,15 +28,15 @@ public class SubirDatoProveedorController {
 
     @PostMapping("/SubirDatosProveedor")
     public String fileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes){
-        subirDatoProveedorService.guardarDatosProveedor(file);
+        datosAcopioService.guardarDatosProveedor(file);
         redirectAttributes.addFlashAttribute("mensaje", "Archivo subido correctamente");
-        subirDatoProveedorService.leerCsvProveedor(file.getOriginalFilename());
+        datosAcopioService.leerCsvProveedor(file.getOriginalFilename());
         return "redirect:/SubirDatosProveedor";
     }
 
     @GetMapping("/obtenerDatosProveedor")
     public String obtenerDatosProveedor(Model model){
-        ArrayList<SubirDatoProveedorEntity> datosProveedor = subirDatoProveedorService.obtenerSubirDatosProveedores();
+        ArrayList<DatosAcopioEntity> datosProveedor = datosAcopioService.obtenerDatosAcopio();
         model.addAttribute("datosProveedor", datosProveedor);
         return "informacionAcopio";
     }

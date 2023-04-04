@@ -16,7 +16,13 @@ public class ProveedorService {
         return (ArrayList<ProveedorEntity>) proveedorRepository.findAll();
     }
 
-    public ProveedorEntity obtenerProveedorPorCodigo(String codigo) {
+    public String obtenerNombreProveedor(String codigo){
+        ProveedorEntity proveedor = proveedorRepository.findByCodigo(codigo);
+        String nombreProveedor = proveedor.getNombre();
+        return nombreProveedor;
+    }
+
+    public ProveedorEntity obtenerProveedorPorId(String codigo){
         return proveedorRepository.findByCodigo(codigo);
     }
 
