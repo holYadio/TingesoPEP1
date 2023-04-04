@@ -11,8 +11,7 @@ import java.util.ArrayList;
 
 @Repository
 public interface ProveedorRepository extends JpaRepository<ProveedorEntity, Long> {
-    @Query("SELECT * FROM ProveedorEntity p WHERE p.codigo = :codigo")
-    ProveedorEntity findByCodigo(@Param("codigo")String codigo);
+    ProveedorEntity findByCodigo(String codigo);
     @Query("SELECT p.nombre FROM ProveedorEntity p WHERE p.codigo = :codigo")
-    String getNombreProveedor(String codigo);
+    String getNombreProveedor(@Param("codigo")String codigo);
 }

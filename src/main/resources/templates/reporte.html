@@ -73,23 +73,55 @@
                     <th>Quincena</th>
                     <th>Código Proveedor</th>
                     <th>Nombre Proveedor</th>
-                    <th>Telefono</th>
-                    <th>Fecha de Nacimiento</th>
-                    <th>Fecha de Registro</th>
+                    <th>Total Kls de Leche</th>
+                    <th>Nro. días que envío leche</th>
+                    <th>Promedio diario KLS leche</th>
+                    <th>% Variacion Leche</th>
+                    <th>% Grasa</th>
+                    <th>% Variación Grasa</th>
+                    <th>% Sólidos Totales </th>
+                    <th>% Variación Sólidos Totales</th>
+                    <th>Pago por Leche</th>
+                    <th>Pago por Grasa</th>
+                    <th>Pago por Sólidos Totales</th>
+                    <th>Bonificación por Frecuencia</th>
+                    <th>Dcto. Variación Leche</th>
+                    <th>Dcto. Variación Grasa</th>
+                    <th>Dcto. Variación Sólidos Totales</th>
+                    <th>Pago Total</th>
+                    <th>Monto Retención</th>
+                    <th>Monto Final</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="cliente : ${clientes}">
-                    <td th:text="${cliente.nombre}"></td>
-                    <td th:text="${cliente.apellido}"></td>
-                    <td th:text="${cliente.correo}"></td>
-                    <td th:text="${cliente.telefono}"></td>
-                    <td th:text="${cliente.fechaNacimiento}"></td>
-                    <td th:text="${cliente.fechaRegistro}"></td>
+                <tr th:each="pagos : ${pagos}">
+                    <td th:text="${pagos.quincena}"></td>
+                    <td th:text="${pagos.codigoProveedor}"></td>
+                    <td th:text="${pagos.nombreProveedor}"></td>
+                    <td th:text="${pagos.KlsTotalLeche}"></td>
+                    <td th:text="${pagos.diasEnvioLeche}"></td>
+                    <td th:text="${pagos.PromedioKilosLecheDiario}"></td>
+                    <td th:text="${pagos.PorcentajeFrecuenciaDiariaEnvioLeche}"></td>
+                    <td th:text="${pagos.PorcentajeGrasa}"></td>
+                    <td th:text="${pagos.PorcentajeVariacionGrasa}"></td>
+                    <td th:text="${pagos.PorcentajeSolidoTotal}"></td>
+                    <td th:text="${pagos.PorcentajeVariacionSolidoTotal}"></td>
+                    <td th:text="${pagos.PagoPorLeche}"></td>
+                    <td th:text="${pagos.PagoPorGrasa}"></td>
+                    <td th:text="${pagos.PagoPorSolidosTotales}"></td>
+                    <td th:text="${pagos.BonificacionPorFrecuencia}"></td>
+                    <td th:text="${pagos.DctoVariacionLeche}"></td>
+                    <td th:text="${pagos.DctoVariacionGrasa}"></td>
+                    <td th:text="${pagos.DctoVariacionST}"></td>
+                    <td th:text="${pagos.PagoTOTAL}"></td>
+                    <td th:text="${pagos.MontoRetencion}"></td>
+                    <td th:text="${pagos.MontoFINAL}"></td>
+
                 </tr>
                 </tbody>
             </table>
         </div>
     </div>
+</div>
 </body>
 </html>

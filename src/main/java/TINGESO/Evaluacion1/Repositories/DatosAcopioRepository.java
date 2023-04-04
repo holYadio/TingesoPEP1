@@ -11,6 +11,5 @@ import java.util.ArrayList;
 
 @Repository
 public interface DatosAcopioRepository extends JpaRepository<DatosAcopioEntity, Long>{
-    @Query("SELECT * FROM DatosAcopioEntity a WHERE a.proveedor = :proveedor")
-    ArrayList<DatosAcopioEntity> findByProveedor(@Param("proveedor") String proveedor);
+    ArrayList<DatosAcopioEntity> findByProveedor(String proveedor);
 }

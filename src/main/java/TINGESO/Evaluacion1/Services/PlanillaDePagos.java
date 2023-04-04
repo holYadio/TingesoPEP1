@@ -189,15 +189,17 @@ public class PlanillaDePagos {
         double grasaAnterior = 0;
         double grasaActual = Integer.parseInt(porcentajeGrasa);
         String quincenaAnterior = quincenaAnterior(quincenaActual);
-        String porcentajeGrasaAnterior = datosLaboratorioService.obtenerDatosLaboratorioPorProveedorYQuincena(
+        String porcentajeGrasaAnterior;
+        if (!datosLaboratorioService.obtenerDatosLaboratorioPorProveedorYQuincena(
                 proveedor,
-                quincenaAnterior).getPorcentaje_grasa();
-        if (porcentajeGrasaAnterior == null) {
-            grasaAnterior = grasaActual;
-        }else{
+                quincenaAnterior).getPorcentaje_grasa().isEmpty()){
+            porcentajeGrasaAnterior = datosLaboratorioService.obtenerDatosLaboratorioPorProveedorYQuincena(
+                    proveedor,
+                    quincenaAnterior).getPorcentaje_grasa();
             grasaAnterior = Integer.parseInt(porcentajeGrasaAnterior);
+        }else{
+            grasaAnterior = grasaActual;
         }
-
         double variacion = grasaAnterior - grasaActual;
         if (variacion < 0) {
             variacion = 0;
@@ -211,13 +213,16 @@ public class PlanillaDePagos {
         double solidosAnterior = 0;
         double solidosActual = Integer.parseInt(porcentajeSolidos);
         String quincenaAnterior = quincenaAnterior(quincenaActual);
-        String porcentajeSolidosAnterior = datosLaboratorioService.obtenerDatosLaboratorioPorProveedorYQuincena(
+        String porcentajeSolidosAnterior;
+        if(!datosLaboratorioService.obtenerDatosLaboratorioPorProveedorYQuincena(
                 proveedor,
-                quincenaAnterior).getPorcentaje_solido_total();
-        if (porcentajeSolidosAnterior == null) {
-            solidosAnterior = solidosActual;
-        }else{
+                quincenaAnterior).getPorcentaje_solido_total().isEmpty()){
+            porcentajeSolidosAnterior = datosLaboratorioService.obtenerDatosLaboratorioPorProveedorYQuincena(
+                    proveedor,
+                    quincenaAnterior).getPorcentaje_solido_total();
             solidosAnterior = Integer.parseInt(porcentajeSolidosAnterior);
+        }else{
+            solidosAnterior = solidosActual;
         }
         double variacion = solidosAnterior - solidosActual;
         if (variacion < 0) {
