@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 
 @Entity
 @Data
@@ -12,7 +13,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PagoEntity {
     @Id
-    private String id;
+    @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Integer id;
+
     private String quincena;
     private String codigoProveedor;
     private String nombreProveedor;

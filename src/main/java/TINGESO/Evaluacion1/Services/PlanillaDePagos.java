@@ -13,6 +13,8 @@ import java.util.ArrayList;
 
 @Service
 public class PlanillaDePagos {
+    static final double IMPUESTORETENCION = 13;
+    static final double LIMITERETENCION = 950000;
     @Autowired
     PagoRepository pagoRepository;
     @Autowired
@@ -31,20 +33,13 @@ public class PlanillaDePagos {
      * @return pago
      */
     public double calcularPagoPorCategoria(ProveedorEntity proveedor,double kls_leche) {
-        double pago = 0;
-        if (proveedor.getCategoria().equals("A")) {
-            pago = kls_leche * 700;
-        }
-        else if (proveedor.getCategoria().equals("B")) {
-            pago = kls_leche * 550;
-        }
-        else if (proveedor.getCategoria().equals("C")) {
-            pago = kls_leche * 400;
-        }
-        else if (proveedor.getCategoria().equals("D")) {
-            pago = kls_leche * 250;
-        }
-        return pago;
+        return switch (proveedor.getCategoria()) {
+            case "A" -> kls_leche * 700;
+            case "B" -> kls_leche * 550;
+            case "C" -> kls_leche * 400;
+            case "D" -> kls_leche * 250;
+            default -> 0;
+        };
     }
 
     /*
@@ -147,8 +142,8 @@ public class PlanillaDePagos {
 
     public String quincenaAnterior(String quincena){
         String quincenaAnterior = "";
-        double anioActual= Integer.parseInt(quincena.split("/")[0]);
-        double mesActual= Integer.parseInt(quincena.split("/")[1]);
+        int anioActual= Integer.parseInt(quincena.split("/")[0]);
+        int mesActual= Integer.parseInt(quincena.split("/")[1]);
         String qActual= quincena.split("/")[2];
         if(qActual.equals("Q1")){
             if(mesActual == 1){
@@ -165,18 +160,18 @@ public class PlanillaDePagos {
         }
         return quincenaAnterior;
     }
+
     private double getVariacion_leche(String quincena, String codigoProveedor, double klsTotalLeche) {
         double klsLecheAnterior;
-        double klsLecheActual = klsTotalLeche;
         String quincenaAnterior = this.quincenaAnterior(quincena);
         if (quincenaAnterior == null) {
-            klsLecheAnterior = klsLecheActual;
+            klsLecheAnterior = klsTotalLeche;
         }else{
             ArrayList<DatosAcopioEntity> datosAcopioQuincena = datosAcopioService.obtenerDatosAcopioPorQuincenayProveedor(
                     quincenaAnterior, codigoProveedor);
             klsLecheAnterior = this.KlsTotalLeche(datosAcopioQuincena);
         }
-        double variacion = klsLecheAnterior - klsLecheActual;
+        double variacion = klsLecheAnterior - klsTotalLeche;
         if (variacion < 0) {
             variacion = 0;
         }
@@ -186,18 +181,16 @@ public class PlanillaDePagos {
     private double getVariacion_grasa(String quincenaActual,
                                       String proveedor,
                                       String porcentajeGrasa) {
-        double grasaAnterior = 0;
+        double grasaAnterior;
         double grasaActual = Integer.parseInt(porcentajeGrasa);
-        String quincenaAnterior = quincenaAnterior(quincenaActual);
+        String quincenaAnterior = this.quincenaAnterior(quincenaActual);
         String porcentajeGrasaAnterior;
-        if (!datosLaboratorioService.obtenerDatosLaboratorioPorProveedorYQuincena(
-                proveedor,
-                quincenaAnterior).getPorcentaje_grasa().isEmpty()){
+        try{
             porcentajeGrasaAnterior = datosLaboratorioService.obtenerDatosLaboratorioPorProveedorYQuincena(
                     proveedor,
                     quincenaAnterior).getPorcentaje_grasa();
             grasaAnterior = Integer.parseInt(porcentajeGrasaAnterior);
-        }else{
+        }catch (Exception e){
             grasaAnterior = grasaActual;
         }
         double variacion = grasaAnterior - grasaActual;
@@ -210,18 +203,16 @@ public class PlanillaDePagos {
     private double getVariacion_solido_total(String quincenaActual,
                                         String proveedor,
                                         String porcentajeSolidos) {
-        double solidosAnterior = 0;
+        double solidosAnterior;
         double solidosActual = Integer.parseInt(porcentajeSolidos);
         String quincenaAnterior = quincenaAnterior(quincenaActual);
         String porcentajeSolidosAnterior;
-        if(!datosLaboratorioService.obtenerDatosLaboratorioPorProveedorYQuincena(
-                proveedor,
-                quincenaAnterior).getPorcentaje_solido_total().isEmpty()){
+        try{
             porcentajeSolidosAnterior = datosLaboratorioService.obtenerDatosLaboratorioPorProveedorYQuincena(
                     proveedor,
                     quincenaAnterior).getPorcentaje_solido_total();
             solidosAnterior = Integer.parseInt(porcentajeSolidosAnterior);
-        }else{
+        }catch (Exception e){
             solidosAnterior = solidosActual;
         }
         double variacion = solidosAnterior - solidosActual;
@@ -233,10 +224,10 @@ public class PlanillaDePagos {
 
     private double calcularDescuentoPorVariacionLeche(String quincena, String codigoProveedor, double klsTotalLeche, double pagoAcopioLeche) {
         double porcentajeVariacionLeche = getVariacion_leche(quincena, codigoProveedor, klsTotalLeche);
-        double descuento = 0;
-        if ((porcentajeVariacionLeche >= 0) && (porcentajeVariacionLeche <= 15)) {
+        double descuento;
+        if ((porcentajeVariacionLeche >= 0) && (porcentajeVariacionLeche <= 8)) {
             descuento = 0;
-        } else if ((porcentajeVariacionLeche > 15) && (porcentajeVariacionLeche <= 25)) {
+        } else if ((porcentajeVariacionLeche > 9) && (porcentajeVariacionLeche <= 25)) {
             descuento = 12;
         } else if ((porcentajeVariacionLeche > 25) && (porcentajeVariacionLeche <= 40)) {
             descuento = 20;
@@ -282,10 +273,8 @@ public class PlanillaDePagos {
      */
     public double calcularRetencion(double pago){
         double retencion = 0;
-        double impuesto = 0.13;
-        double limite = 950000; // Limite del pago para que se le aplique la retencion al proveedor
-        if (pago > limite){
-            retencion = pago * impuesto;
+        if (pago > LIMITERETENCION){
+            retencion = pago * IMPUESTORETENCION/ 100;
         }
         return retencion;
     }
@@ -299,7 +288,6 @@ public class PlanillaDePagos {
      */
     public void calcularPagoFinal(){
         ArrayList<DatosLaboratorioEntity> datosLaboratorio = datosLaboratorioService.obtenerDatosLaboratorio();
-        ArrayList<ProveedorEntity> proveedores = proveedorService.obtenerProveedores();
         String quincena;
         String codigoProveedor;
         String nombreProveedor;
@@ -321,9 +309,9 @@ public class PlanillaDePagos {
         double PagoTOTAL;
         double MontoRetencion;
         String MontoFINAL;
-        for (int i = 0; i < (datosLaboratorio.size() - 1); i++) {
-            double PagoAcopioLeche = 0;
-            double DctoTotal=0;
+        for (int i = 0; i < (datosLaboratorio.size()); i++) {
+            double PagoAcopioLeche;
+            double DctoTotal;
             quincena = datosLaboratorio.get(i).getQuincena();
             codigoProveedor = datosLaboratorio.get(i).getProveedor();
             ArrayList<DatosAcopioEntity> datosAcopioQuincena = datosAcopioService.obtenerDatosAcopioPorQuincenayProveedor(
@@ -369,7 +357,7 @@ public class PlanillaDePagos {
             MontoRetencion= this.calcularRetencion(PagoTOTAL);
             MontoFINAL = String.valueOf(PagoTOTAL - MontoRetencion);
 
-            guardarPago(quincena,
+            guardarPagoDB(quincena,
                     codigoProveedor,
                     nombreProveedor,
                     String.valueOf(KlsTotalLeche),
@@ -393,10 +381,13 @@ public class PlanillaDePagos {
         }
     }
 
+    public void guardarPago(PagoEntity pago){
+        pagoRepository.save(pago);
+    }
     /*
      * Guarda el pago de un proveedor
      */
-    public void guardarPago(String quincena,
+    public void guardarPagoDB(String quincena,
                             String codigoProveedor,
                             String nombreProveedor,
                             String KlsTotalLeche,
@@ -439,7 +430,7 @@ public class PlanillaDePagos {
         pago.setPagoTOTAL(PagoTOTAL);
         pago.setMontoRetencion(MontoRetencion);
         pago.setMontoFINAL(MontoFINAL);
-        pagoRepository.save(pago);
+        this.guardarPago(pago);
     }
 
     /*
@@ -448,6 +439,9 @@ public class PlanillaDePagos {
      */
     public ArrayList<PagoEntity> obtenerPagos(){
         return (ArrayList<PagoEntity>) pagoRepository.findAll();
+    }
+    public void deleteAll(){
+        pagoRepository.deleteAll();
     }
 }
 

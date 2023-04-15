@@ -18,6 +18,7 @@ public class PlanillaDePagosController {
 
     @GetMapping("/planillaDePagos")
     public String planillaDePagos(Model model) {
+        planillaDePagos.deleteAll();
         planillaDePagos.calcularPagoFinal();
         ArrayList<PagoEntity> pagos = planillaDePagos.obtenerPagos();
         model.addAttribute("pagos", pagos);
