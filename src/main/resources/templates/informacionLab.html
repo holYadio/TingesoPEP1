@@ -5,6 +5,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
           rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp"
           crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../static/css/button.css" th:href="@{/css/button.css}">
+    <link rel="stylesheet" type="text/css" href="../static/css/body.css" th:href="@{/css/body.css}">
+    <link rel="stylesheet" type="text/css" href="../static/css/header.css" th:href="@{/css/header.css}">
     <title>Importar datos del Laboratorio</title>
     <style>
         .content-table{
@@ -53,54 +56,20 @@
             margin-left: 300px;
             margin-right: 300px;
         }
-        .header{
-            background-color: #1b3039;
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            height: 85px;
-            padding: 5px 10%;
-        }
-        .header .btn button{
-            margin-left: 20px;
-            font-weight: 700;
-            color: #1b3039;
-            padding: 9px 25px;
-            background: #eceff1;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease 0s;
-        }
-        .header .btn button:hover{
-            background-color: #e2f1f8;
-            color: #ffbc0e;
-            transform: scale(1.1);
-        }
-        .header .btn-2 button {
-            margin-left: 20px;
-            font-weight: 700;
-            color: #1b3039;
-            padding: 9px 25px;
-            background: #eceff1;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease 0s;
-        }
-        .header .btn-2 button:hover{
-            background-color: #e2f1f8;
-            color: #ffbc0e;
-            transform: scale(1.1);
-        }
     </style>
 </head>
 <body>
 <header class="header">
-    <nav>
-    </nav>
-    <a class="btn" href="/"><button>Inicio</button></a>
-    <a class="btn" href="/SubirDatosLaboratorio"><button>Cargar datos de Laboratorio</button></a>
+    <a class="btnHeader" href="/">
+        <button type="button" class="btn btn-outline-light">
+            Inicio
+        </button>
+    </a>
+    <a class="btnHeader" href="/SubirDatosLaboratorio">
+        <button type="button" class="btn btn-outline-light">
+            Cargar datos de Laboratorio
+        </button>
+    </a>
 </header>
 <div style="align-content: center" class="container">
     <h1><b>Información del Laboratorio</b></h1>

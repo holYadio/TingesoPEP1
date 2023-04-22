@@ -4,85 +4,27 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
           rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp"
           crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" type="text/css" href="../static/css/button.css" th:href="@{/css/button.css}">
+    <link rel="stylesheet" type="text/css" href="../static/css/body.css" th:href="@{/css/body.css}">
+    <link rel="stylesheet" type="text/css" href="../static/css/header.css" th:href="@{/css/header.css}">
+    <link rel="stylesheet" type="text/css" href="../static/css/registro.css" th:href="@{/css/registro.css}">
     <meta charset="UTF-8">
     <title>Nuevo Proveedor</title>
-    <style>
-        form {
-            border: 6px solid #f1f1f1;
-        }
-        input[type=text], input[type=password] {
-            width: 100%;
-            padding: 16px 8px;
-            margin: 8px 0;
-            display: inline-block;
-            border: 1px solid #ccc;
-            box-sizing: border-box;
-        }
-        h1{
-            text-align: center;
-        }
-        .header{
-            background-color: #20bb93;
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            height: 85px;
-            padding: 5px 10%;
-        }
-        .mainClass{
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-            font-family: Roboto, Arial, sans-serif;
-            font-size: 15px;
-        }
-
-        .formContainer {
-            text-align: left;
-            margin: 24px 50px 12px;
-        }
-        .container {
-            padding: 16px 0;
-            text-align:left;
-        }
-        .header .btn button{
-            margin-left: 20px;
-            font-weight: 700;
-            color: #1b3039;
-            padding: 9px 25px;
-            background: #eceff1;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease 0s;
-        }
-        .header .btn button:hover{
-            background-color: #e2f1f8;
-            color: #31c59d;
-            transform: scale(1.1);
-        }
-        .btn2 {
-            margin-left: 20px;
-            font-weight: 700;
-            color: #1b3039;
-            padding: 9px 25px;
-            background: #eceff1;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease 0s;
-        }
-        .btn2:hover{
-            background-color: #e2f1f8;
-            color: #31c59d;
-            transform: scale(1.1);
-        }
-    </style>
 </head>
 <body>
 <header class="header">
-    <a class="btn" href="/"><button type="button" class="btn btn-outline-light">Inicio</button></a>
-    <a class="btn" href="/obtenerProveedores"><button type="button" class="btn btn-outline-light">Volver</button></a>
+    <a class="btnHeader" href="/">
+        <button type="button" class="btn btn-outline-light">
+            Inicio
+        </button>
+    </a>
+    <a class="btnHeader" href="/obtenerProveedores">
+        <button type="button" class="btn btn-outline-light">
+            Volver
+        </button>
+    </a>
 </header>
 <div class="mainClass">
     <form th:action="@{/nuevoProveedor}" method="post">
@@ -103,7 +45,7 @@
                 <input type="text" id = "retencion"
                        placeholder="Ingrese la retención" name="retencion" required>
             </div>
-            <button class="btn2" type="submit">Registrar Proveedor</button>
+            <button class="button" type="submit">Registrar</button>
         </div>
     </form>
 </div>
