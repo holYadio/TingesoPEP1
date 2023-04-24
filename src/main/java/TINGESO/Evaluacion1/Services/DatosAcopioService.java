@@ -118,16 +118,53 @@ public class DatosAcopioService {
         }
     }
 
-    public void guardarDatoProveedor(DatosAcopioEntity dato) {
-        datosAcopioRepository.save(dato);
-    }
-
     public void guardarDatoProveedorDB(String fecha, String turno, String proveedor, String kls_leche){
         DatosAcopioEntity newDato = new DatosAcopioEntity();
         newDato.setFecha(fecha);
         newDato.setTurno(turno);
         newDato.setProveedor(proveedor);
         newDato.setKls_leche(kls_leche);
-        guardarDatoProveedor(newDato);
+        datosAcopioRepository.save(newDato);
+    }
+
+
+
+    public double KlsTotalLeche(ArrayList<DatosAcopioEntity> datosAcopio){
+        double KlsTotalLeche = 0;
+        for (DatosAcopioEntity datos : datosAcopio) {
+            KlsTotalLeche += Integer.parseInt(datos.getKls_leche());
+        }
+        return KlsTotalLeche;
+    }
+
+
+    public double diasEnvioLeche(ArrayList<DatosAcopioEntity> datosAcopio){
+        double diasEnvioAcopio = 0;
+        for (int i = 0; i < (datosAcopio.size()); i++) {
+            if(i < (datosAcopio.size() - 1)) {
+                if ((datosAcopio.get(i).getFecha().equals(datosAcopio.get(i + 1).getFecha())) &&
+                        !datosAcopio.get(i).getTurno().equals(datosAcopio.get(i + 1).getTurno())) {
+                    i++;
+                    diasEnvioAcopio++;
+                }else if ((!datosAcopio.get(i).getFecha().equals(datosAcopio.get(i + 1).getFecha()))) {
+                    diasEnvioAcopio++;
+                }
+            } else{
+                try{
+                    if ((datosAcopio.get(i).getFecha().equals(datosAcopio.get(i - 1).getFecha())) &&
+                            !datosAcopio.get(i).getTurno().equals(datosAcopio.get(i - 1).getTurno())) {
+                        diasEnvioAcopio++;
+                    } else if ((!datosAcopio.get(i).getFecha().equals(datosAcopio.get(i - 1).getFecha()))) {
+                        diasEnvioAcopio++;
+                    }
+                } catch (Exception e) {
+                    logg.error("Error", e);
+                }
+            }
+        }
+        if(datosAcopio.size() == 1){
+            diasEnvioAcopio++;
+        }
+        return diasEnvioAcopio;
     }
 }

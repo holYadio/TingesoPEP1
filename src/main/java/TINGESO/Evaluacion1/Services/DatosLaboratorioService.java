@@ -1,5 +1,6 @@
 package TINGESO.Evaluacion1.Services;
 
+import TINGESO.Evaluacion1.Entities.DatosAcopioEntity;
 import TINGESO.Evaluacion1.Entities.DatosLaboratorioEntity;
 import TINGESO.Evaluacion1.Repositories.DatosLaboratorioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ import java.util.ArrayList;
 public class DatosLaboratorioService {
     @Autowired
     DatosLaboratorioRepository datosLaboratorioRepository;
+
+    @Autowired
+    DatosAcopioService datosAcopioService;
 
     private final Logger logg = LoggerFactory.getLogger(DatosLaboratorioService.class);
 
@@ -104,6 +108,86 @@ public class DatosLaboratorioService {
         guardarDato(newData);
     }
 
+    public double getVariacion_solido_total(String quincenaActual,
+                                             String proveedor,
+                                             String porcentajeSolidos) {
+        double solidosAnterior;
+        double solidosActual = Integer.parseInt(porcentajeSolidos);
+        String quincenaAnterior = quincenaAnterior(quincenaActual);
+        String porcentajeSolidosAnterior;
+        try{
+            porcentajeSolidosAnterior = this.obtenerDatosLaboratorioPorProveedorYQuincena(
+                    proveedor,
+                    quincenaAnterior).getPorcentaje_solido_total();
+            solidosAnterior = Integer.parseInt(porcentajeSolidosAnterior);
+        }catch (Exception e){
+            solidosAnterior = solidosActual;
+        }
+        double variacion = solidosAnterior - solidosActual;
+        if (variacion < 0) {
+            variacion = 0;
+        }
+        return variacion;
+    }
 
+    public double getVariacion_grasa(String quincenaActual,
+                                      String proveedor,
+                                      String porcentajeGrasa) {
+        double grasaAnterior;
+        double grasaActual = Integer.parseInt(porcentajeGrasa);
+        String quincenaAnterior = this.quincenaAnterior(quincenaActual);
+        String porcentajeGrasaAnterior;
+        try{
+            porcentajeGrasaAnterior = this.obtenerDatosLaboratorioPorProveedorYQuincena(
+                    proveedor,
+                    quincenaAnterior).getPorcentaje_grasa();
+            grasaAnterior = Integer.parseInt(porcentajeGrasaAnterior);
+        }catch (Exception e){
+            grasaAnterior = grasaActual;
+        }
+        double variacion = grasaAnterior - grasaActual;
+        if (variacion < 0) {
+            variacion = 0;
+        }
+        return variacion;
+    }
+
+    public String quincenaAnterior(String quincena){
+        String quincenaAnterior = "";
+        int anioActual= Integer.parseInt(quincena.split("/")[0]);
+        int mesActual= Integer.parseInt(quincena.split("/")[1]);
+        String qActual= quincena.split("/")[2];
+        if(qActual.equals("Q1")){
+            if(mesActual == 1){
+                anioActual--;
+                mesActual = 12;
+            }
+            else{
+                mesActual--;
+            }
+            quincenaAnterior = anioActual + "/" + mesActual + "/" + "Q2";
+        }
+        else if(qActual.equals("Q2")){
+            quincenaAnterior = anioActual + "/" + mesActual + "/" + "Q1";
+        }
+        return quincenaAnterior;
+    }
+
+    public double getVariacion_leche(String quincena, String codigoProveedor, double klsTotalLeche) {
+        double klsLecheAnterior;
+        String quincenaAnterior = this.quincenaAnterior(quincena);
+        if (quincenaAnterior == null) {
+            klsLecheAnterior = klsTotalLeche;
+        }else{
+            ArrayList<DatosAcopioEntity> datosAcopioQuincena = datosAcopioService.obtenerDatosAcopioPorQuincenayProveedor(
+                    quincenaAnterior, codigoProveedor);
+            klsLecheAnterior = datosAcopioService.KlsTotalLeche(datosAcopioQuincena);
+        }
+        double variacion = klsLecheAnterior - klsTotalLeche;
+        if (variacion <= 0) {
+            variacion = 0;
+        }
+        return variacion;
+    }
 
 }

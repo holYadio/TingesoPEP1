@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class DatosLaboratorioEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private String proveedor;
     private String porcentaje_grasa;
     private String porcentaje_solido_total;

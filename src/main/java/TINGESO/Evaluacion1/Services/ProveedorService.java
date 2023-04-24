@@ -18,20 +18,19 @@ public class ProveedorService {
 
     public String obtenerNombreProveedor(String codigo){
         ProveedorEntity proveedor = proveedorRepository.findByCodigo(codigo);
-        String nombreProveedor = proveedor.getNombre();
-        return nombreProveedor;
+        return proveedor.getNombre();
     }
 
     public ProveedorEntity obtenerProveedorPorId(String codigo){
         return proveedorRepository.findByCodigo(codigo);
     }
 
-    public ProveedorEntity guardarProveedor(String codigo, String nombre, String categoria, String retencion) {
+    public void guardarProveedor(String codigo, String nombre, String categoria, String retencion) {
         ProveedorEntity proveedor = new ProveedorEntity();
         proveedor.setCodigo(codigo);
         proveedor.setNombre(nombre);
-        proveedor.setCategoria(categoria);
+        proveedor.setCategoria(categoria.toUpperCase());
         proveedor.setRetencion(retencion);
-        return proveedorRepository.save(proveedor);
+        proveedorRepository.save(proveedor);
     }
 }

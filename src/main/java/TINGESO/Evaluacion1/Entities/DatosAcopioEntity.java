@@ -13,9 +13,8 @@ import org.jetbrains.annotations.NotNull;
 @Data
 public class DatosAcopioEntity {
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private String fecha;
     private String turno;
     private String proveedor;

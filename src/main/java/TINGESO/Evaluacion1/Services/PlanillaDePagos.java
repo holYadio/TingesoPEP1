@@ -118,112 +118,14 @@ public class PlanillaDePagos {
     }
 
 
-    public double KlsTotalLeche(ArrayList<DatosAcopioEntity> datosAcopio){
-        double KlsTotalLeche = 0;
-        for (DatosAcopioEntity datos : datosAcopio) {
-            KlsTotalLeche += Integer.parseInt(datos.getKls_leche());
-        }
-        return KlsTotalLeche;
-    }
 
 
-    public double diasEnvioLeche(ArrayList<DatosAcopioEntity> datosAcopio){
-        double diasEnvioAcopio = 0;
-        for (int i = 0; i < (datosAcopio.size() - 1); i++) {
-            if((datosAcopio.get(i).getFecha().equals(datosAcopio.get(i+1).getFecha())) &&
-                    !datosAcopio.get(i).getTurno().equals(datosAcopio.get(i+1).getTurno())){
-                i++;
-            }
-            diasEnvioAcopio++;
-        }
-        return diasEnvioAcopio;
-    }
 
 
-    public String quincenaAnterior(String quincena){
-        String quincenaAnterior = "";
-        int anioActual= Integer.parseInt(quincena.split("/")[0]);
-        int mesActual= Integer.parseInt(quincena.split("/")[1]);
-        String qActual= quincena.split("/")[2];
-        if(qActual.equals("Q1")){
-            if(mesActual == 1){
-                anioActual--;
-                mesActual = 12;
-            }
-            else{
-                mesActual--;
-            }
-            quincenaAnterior = anioActual + "/" + mesActual + "/" + "Q2";
-        }
-        else if(qActual.equals("Q2")){
-            quincenaAnterior = anioActual + "/" + mesActual + "/" + "Q1";
-        }
-        return quincenaAnterior;
-    }
 
-    private double getVariacion_leche(String quincena, String codigoProveedor, double klsTotalLeche) {
-        double klsLecheAnterior;
-        String quincenaAnterior = this.quincenaAnterior(quincena);
-        if (quincenaAnterior == null) {
-            klsLecheAnterior = klsTotalLeche;
-        }else{
-            ArrayList<DatosAcopioEntity> datosAcopioQuincena = datosAcopioService.obtenerDatosAcopioPorQuincenayProveedor(
-                    quincenaAnterior, codigoProveedor);
-            klsLecheAnterior = this.KlsTotalLeche(datosAcopioQuincena);
-        }
-        double variacion = klsLecheAnterior - klsTotalLeche;
-        if (variacion < 0) {
-            variacion = 0;
-        }
-        return variacion;
-    }
 
-    private double getVariacion_grasa(String quincenaActual,
-                                      String proveedor,
-                                      String porcentajeGrasa) {
-        double grasaAnterior;
-        double grasaActual = Integer.parseInt(porcentajeGrasa);
-        String quincenaAnterior = this.quincenaAnterior(quincenaActual);
-        String porcentajeGrasaAnterior;
-        try{
-            porcentajeGrasaAnterior = datosLaboratorioService.obtenerDatosLaboratorioPorProveedorYQuincena(
-                    proveedor,
-                    quincenaAnterior).getPorcentaje_grasa();
-            grasaAnterior = Integer.parseInt(porcentajeGrasaAnterior);
-        }catch (Exception e){
-            grasaAnterior = grasaActual;
-        }
-        double variacion = grasaAnterior - grasaActual;
-        if (variacion < 0) {
-            variacion = 0;
-        }
-        return variacion;
-    }
-
-    private double getVariacion_solido_total(String quincenaActual,
-                                        String proveedor,
-                                        String porcentajeSolidos) {
-        double solidosAnterior;
-        double solidosActual = Integer.parseInt(porcentajeSolidos);
-        String quincenaAnterior = quincenaAnterior(quincenaActual);
-        String porcentajeSolidosAnterior;
-        try{
-            porcentajeSolidosAnterior = datosLaboratorioService.obtenerDatosLaboratorioPorProveedorYQuincena(
-                    proveedor,
-                    quincenaAnterior).getPorcentaje_solido_total();
-            solidosAnterior = Integer.parseInt(porcentajeSolidosAnterior);
-        }catch (Exception e){
-            solidosAnterior = solidosActual;
-        }
-        double variacion = solidosAnterior - solidosActual;
-        if (variacion < 0) {
-            variacion = 0;
-        }
-        return variacion;
-    }
-
-    private double calcularDescuentoPorVariacionLeche(String quincena, String codigoProveedor, double klsTotalLeche, double pagoAcopioLeche) {
-        double porcentajeVariacionLeche = getVariacion_leche(quincena, codigoProveedor, klsTotalLeche);
+    public double calcularDescuentoPorVariacionLeche(String quincena, String codigoProveedor, double klsTotalLeche, double pagoAcopioLeche) {
+        double porcentajeVariacionLeche = datosLaboratorioService.getVariacion_leche(quincena, codigoProveedor, klsTotalLeche);
         double descuento;
         if ((porcentajeVariacionLeche >= 0) && (porcentajeVariacionLeche <= 8)) {
             descuento = 0;
@@ -237,7 +139,7 @@ public class PlanillaDePagos {
         return  pagoAcopioLeche * descuento / 100;
     }
 
-    private double calcularDescuentoPorVariacionGrasa(double porcentajeVariacionGrasa, double pagoAcopioLeche) {
+    public double calcularDescuentoPorVariacionGrasa(double porcentajeVariacionGrasa, double pagoAcopioLeche) {
         double porcentaje;
         if ((porcentajeVariacionGrasa >= 0) && (porcentajeVariacionGrasa <= 15)) {
             porcentaje = 0;
@@ -252,7 +154,7 @@ public class PlanillaDePagos {
     }
 
 
-    private double calcularDescuentoPorVariacionSolidosTotales(double porcentajeVariacionSolidoTotal, double pagoAcopioLeche) {
+    public double calcularDescuentoPorVariacionSolidosTotales(double porcentajeVariacionSolidoTotal, double pagoAcopioLeche) {
         double porcentaje;
         if ((porcentajeVariacionSolidoTotal >= 0) && (porcentajeVariacionSolidoTotal <= 6)) {
             porcentaje = 0;
@@ -317,16 +219,16 @@ public class PlanillaDePagos {
             ArrayList<DatosAcopioEntity> datosAcopioQuincena = datosAcopioService.obtenerDatosAcopioPorQuincenayProveedor(
                     quincena, codigoProveedor);
             nombreProveedor = proveedorService.obtenerNombreProveedor(codigoProveedor);
-            KlsTotalLeche = this.KlsTotalLeche(datosAcopioQuincena);
-            diasEnvioLeche = String.valueOf(this.diasEnvioLeche(datosAcopioQuincena));
+            KlsTotalLeche = datosAcopioService.KlsTotalLeche(datosAcopioQuincena);
+            diasEnvioLeche = String.valueOf(datosAcopioService.diasEnvioLeche(datosAcopioQuincena));
             PromedioKilosLecheDiario = String.valueOf(KlsTotalLeche/15);
-            PorcentajeFrecuenciaDiariaEnvioLeche = String.valueOf(this.diasEnvioLeche(datosAcopioQuincena)/15);//Preguntar al profe
+            PorcentajeFrecuenciaDiariaEnvioLeche = String.valueOf(datosAcopioService.diasEnvioLeche(datosAcopioQuincena)/15);//Preguntar al profe
             PorcentajeGrasa = datosLaboratorio.get(i).getPorcentaje_grasa();
-            PorcentajeVariacionGrasa = this.getVariacion_grasa(quincena,
+            PorcentajeVariacionGrasa = datosLaboratorioService.getVariacion_grasa(quincena,
                     codigoProveedor,
                     PorcentajeGrasa);
             PorcentajeSolidoTotal = datosLaboratorio.get(i).getPorcentaje_solido_total();
-            PorcentajeVariacionSolidoTotal = this.getVariacion_solido_total(quincena,
+            PorcentajeVariacionSolidoTotal = datosLaboratorioService.getVariacion_solido_total(quincena,
                     codigoProveedor,
                     PorcentajeSolidoTotal);
             PagoPorLeche = this.calcularPagoPorCategoria(
@@ -376,7 +278,7 @@ public class PlanillaDePagos {
                     String.valueOf(DctoVariacionGrasa),
                     String.valueOf(DctoVariacionST),
                     String.valueOf(PagoTOTAL),
-                    String.valueOf (MontoRetencion),
+                    String.valueOf(MontoRetencion),
                     MontoFINAL);
         }
     }

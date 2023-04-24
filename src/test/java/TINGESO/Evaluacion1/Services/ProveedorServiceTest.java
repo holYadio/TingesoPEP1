@@ -17,4 +17,20 @@ class ProveedorServiceTest {
     @Test
     void guardarProveedor() {
     }
+
+    @Test
+    void testObtenerProveedores() {
+    }
+
+    @Test
+    void obtenerNombreProveedor() {
+    }
+
+    @Test
+    void obtenerProveedorPorId() {
+    }
+
+    @Test
+    void testGuardarProveedor() {
+    }
 }
