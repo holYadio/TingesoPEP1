@@ -4,31 +4,51 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+
+import org.mockito.stubbing.OngoingStubbing;
+import org.slf4j.Logger;
+
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import TINGESO.Evaluacion1.Entities.DatosAcopioEntity;
 import TINGESO.Evaluacion1.Repositories.DatosAcopioRepository;
+import TINGESO.Evaluacion1.Services.DatosLaboratorioService;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 @SpringBootTest
 public class DatosAcopioServiceTest {
+    @Mock
+    DatosAcopioRepository repository;
 
-    @Autowired
-    private DatosAcopioService service;
+    @Mock
+    DatosLaboratorioService datosLaboratorioService;
 
-    @MockBean
-    private DatosAcopioRepository repository;
+    DatosAcopioService service;
+
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+        service = new DatosAcopioService();
+        service.datosAcopioRepository = repository;
+        service.datosLaboratorioService = datosLaboratorioService;
+    }
+
 
     @Test
     void testObtenerDatosAcopioPorProveedor() {
         ArrayList<DatosAcopioEntity> expected = new ArrayList<>();
         expected.add(new DatosAcopioEntity(1,"2023/01/01", "M", "01003", "10"));
         expected.add(new DatosAcopioEntity(2,"2023/01/01", "M", "01003", "10"));
-        when(repository.findByProveedor("Proveedor1")).thenReturn(expected);
-        ArrayList<DatosAcopioEntity> result = service.obtenerDatosAcopioPorProveedor("Proveedor1");
+        when(repository.findByProveedor("01003")).thenReturn(expected);
+        ArrayList<DatosAcopioEntity> result = service.obtenerDatosAcopioPorProveedor("01003");
         assertEquals(expected, result);
     }
 
@@ -79,6 +99,7 @@ public class DatosAcopioServiceTest {
         assertEquals(50, klsTotalLeche, 0);
     }
 
+
     @Test
     void testDiasEnvioLeche() {
         DatosAcopioEntity dato1 = new DatosAcopioEntity();
@@ -108,4 +129,14 @@ public class DatosAcopioServiceTest {
         assertEquals(2, result);
     }
 
+    @Test
+    void testGetVariacion_leche() {
+        String quincena = "2022/04/Q1";
+        String codigoProveedor = "01003";
+        double klsTotalLeche = 500.0;
+        double expectedVariacion = 0;
+        double actualVariacion = service.getVariacion_leche(quincena, codigoProveedor, klsTotalLeche);
+        System.out.println(actualVariacion);
+        Assertions.assertEquals(expectedVariacion, actualVariacion);
+    }
 }

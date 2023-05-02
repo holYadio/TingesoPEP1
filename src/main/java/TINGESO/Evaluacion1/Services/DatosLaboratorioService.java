@@ -1,6 +1,5 @@
 package TINGESO.Evaluacion1.Services;
 
-import TINGESO.Evaluacion1.Entities.DatosAcopioEntity;
 import TINGESO.Evaluacion1.Entities.DatosLaboratorioEntity;
 import TINGESO.Evaluacion1.Repositories.DatosLaboratorioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +22,6 @@ public class DatosLaboratorioService {
     @Autowired
     DatosLaboratorioRepository datosLaboratorioRepository;
 
-    @Autowired
-    DatosAcopioService datosAcopioService;
 
     private final Logger logg = LoggerFactory.getLogger(DatosLaboratorioService.class);
 
@@ -95,17 +92,13 @@ public class DatosLaboratorioService {
         }
     }
 
-    public void guardarDato(DatosLaboratorioEntity data){
-        datosLaboratorioRepository.save(data);
-    }
-
     public void guardarDatoDB(String proveedor, String porcentaje_grasa, String porcentaje_solido_total, String quincena){
         DatosLaboratorioEntity newData = new DatosLaboratorioEntity();
         newData.setProveedor(proveedor);
         newData.setPorcentaje_grasa(porcentaje_grasa);
         newData.setPorcentaje_solido_total(porcentaje_solido_total);
         newData.setQuincena(quincena);
-        guardarDato(newData);
+        datosLaboratorioRepository.save(newData);
     }
 
     public double getVariacion_solido_total(String quincenaActual,
@@ -154,16 +147,21 @@ public class DatosLaboratorioService {
 
     public String quincenaAnterior(String quincena){
         String quincenaAnterior = "";
-        int anioActual= Integer.parseInt(quincena.split("/")[0]);
-        int mesActual= Integer.parseInt(quincena.split("/")[1]);
+        String anioActual= quincena.split("/")[0];
+        String mesActual= quincena.split("/")[1];
         String qActual= quincena.split("/")[2];
         if(qActual.equals("Q1")){
-            if(mesActual == 1){
-                anioActual--;
-                mesActual = 12;
+            if(mesActual.equals("01")){
+                anioActual = Integer.toString(Integer.parseInt(anioActual) - 1);
+                mesActual = "12";
             }
             else{
-                mesActual--;
+                if (mesActual.length() == 1) {
+                    mesActual = Integer.toString(Integer.parseInt(mesActual) - 1);
+                    mesActual = "0" + mesActual;
+                }else{
+                    mesActual = Integer.toString(Integer.parseInt(mesActual) - 1);
+                }
             }
             quincenaAnterior = anioActual + "/" + mesActual + "/" + "Q2";
         }
@@ -173,21 +171,5 @@ public class DatosLaboratorioService {
         return quincenaAnterior;
     }
 
-    public double getVariacion_leche(String quincena, String codigoProveedor, double klsTotalLeche) {
-        double klsLecheAnterior;
-        String quincenaAnterior = this.quincenaAnterior(quincena);
-        if (quincenaAnterior == null) {
-            klsLecheAnterior = klsTotalLeche;
-        }else{
-            ArrayList<DatosAcopioEntity> datosAcopioQuincena = datosAcopioService.obtenerDatosAcopioPorQuincenayProveedor(
-                    quincenaAnterior, codigoProveedor);
-            klsLecheAnterior = datosAcopioService.KlsTotalLeche(datosAcopioQuincena);
-        }
-        double variacion = klsLecheAnterior - klsTotalLeche;
-        if (variacion <= 0) {
-            variacion = 0;
-        }
-        return variacion;
-    }
 
 }

@@ -22,6 +22,9 @@ public class DatosAcopioService {
     @Autowired
     DatosAcopioRepository datosAcopioRepository;
 
+    @Autowired
+    DatosLaboratorioService datosLaboratorioService;
+
     private final Logger logg = LoggerFactory.getLogger(DatosAcopioService.class);
 
     public ArrayList<DatosAcopioEntity> obtenerDatosAcopio() {
@@ -166,5 +169,22 @@ public class DatosAcopioService {
             diasEnvioAcopio++;
         }
         return diasEnvioAcopio;
+    }
+
+    public double getVariacion_leche(String quincena, String codigoProveedor, double klsTotalLeche) {
+        double klsLecheAnterior;
+        String quincenaAnterior = datosLaboratorioService.quincenaAnterior(quincena);
+        if (quincenaAnterior == null) {
+            klsLecheAnterior = klsTotalLeche;
+        }else{
+            ArrayList<DatosAcopioEntity> datosAcopioQuincena = this.obtenerDatosAcopioPorQuincenayProveedor(
+                    quincenaAnterior, codigoProveedor);
+            klsLecheAnterior = this.KlsTotalLeche(datosAcopioQuincena);
+        }
+        double variacion = klsLecheAnterior - klsTotalLeche;
+        if (variacion <= 0) {
+            variacion = 0;
+        }
+        return variacion;
     }
 }

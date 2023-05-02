@@ -1,36 +1,69 @@
 package TINGESO.Evaluacion1.Services;
-
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
-class ProveedorServiceTest {
+import java.util.ArrayList;
+
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import TINGESO.Evaluacion1.Entities.ProveedorEntity;
+import TINGESO.Evaluacion1.Repositories.ProveedorRepository;
+
+@SpringBootTest
+public class ProveedorServiceTest {
+
+    @Mock
+    private ProveedorRepository proveedorRepository;
+
+    @InjectMocks
+    private ProveedorService proveedorService;
 
     @Test
-    void obtenerProveedores() {
+    public void testObtenerProveedores() {
+        ArrayList<ProveedorEntity> proveedores = new ArrayList<>();
+        proveedores.add(new ProveedorEntity());
+        Mockito.when(proveedorRepository.findAll()).thenReturn(proveedores);
+        ArrayList<ProveedorEntity> proveedoresObtenidos = proveedorService.obtenerProveedores();
+        assertEquals(proveedores, proveedoresObtenidos);
     }
 
     @Test
-    void obtenerProveedorPorCodigo() {
+    public void testObtenerNombreProveedor() {
+        String codigo = "01003";
+        ProveedorEntity proveedor = new ProveedorEntity();
+        proveedor.setCodigo(codigo);
+        proveedor.setNombre("Proveedor 1");
+        Mockito.when(proveedorRepository.findByCodigo(codigo)).thenReturn(proveedor);
+        String nombreObtenido = proveedorService.obtenerNombreProveedor(codigo);
+        assertEquals(proveedor.getNombre(), nombreObtenido);
     }
 
     @Test
-    void guardarProveedor() {
+    public void testObtenerProveedorPorId() {
+        String codigo = "01003";
+        ProveedorEntity proveedor = new ProveedorEntity();
+        proveedor.setCodigo(codigo);
+        proveedor.setNombre("Proveedor 1");
+        Mockito.when(proveedorRepository.findByCodigo(codigo)).thenReturn(proveedor);
+        ProveedorEntity proveedorObtenido = proveedorService.obtenerProveedorPorId(codigo);
+        assertEquals(proveedor, proveedorObtenido);
     }
 
     @Test
-    void testObtenerProveedores() {
-    }
-
-    @Test
-    void obtenerNombreProveedor() {
-    }
-
-    @Test
-    void obtenerProveedorPorId() {
-    }
-
-    @Test
-    void testGuardarProveedor() {
+    public void testGuardarProveedor() {
+        String codigo = "01003";
+        String nombre = "Alcides";
+        String categoria = "A";
+        String retencion = "si";
+        proveedorService.guardarProveedor(codigo, nombre, categoria, retencion);
+        ProveedorEntity proveedor = new ProveedorEntity();
+        proveedor.setCodigo(codigo);
+        proveedor.setNombre(nombre);
+        proveedor.setCategoria(categoria.toUpperCase());
+        proveedor.setRetencion(retencion);
+        Mockito.verify(proveedorRepository).save(proveedor);
     }
 }
