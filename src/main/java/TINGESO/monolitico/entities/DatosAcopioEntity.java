@@ -17,5 +17,6 @@ public class DatosAcopioEntity {
     private String fecha;
     private String turno;
     private String proveedor;
+    @Column(name = "kls_leche")
     private String klsLeche;
 }

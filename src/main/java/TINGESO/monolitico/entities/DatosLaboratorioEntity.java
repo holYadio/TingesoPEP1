@@ -16,7 +16,9 @@ public class DatosLaboratorioEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String proveedor;
+    @Column(name = "porcentaje_grasa")
     private String porcentajeGrasa;
+    @Column(name = "porcentaje_solido_total")
     private String porcentajeSolidoTotal;
     private String quincena;
 }
