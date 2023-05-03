@@ -143,29 +143,29 @@ public class DatosAcopioService {
     public double diasEnvioLeche(List<DatosAcopioEntity> datosAcopio){
         double diasEnvioAcopio = 0;
         int i = 0;
-        while (i < (datosAcopio.size())) {
-            if(i < (datosAcopio.size() - 1)) {
-                if ((datosAcopio.get(i).getFecha().equals(datosAcopio.get(i + 1).getFecha())) &&
-                        !datosAcopio.get(i).getTurno().equals(datosAcopio.get(i + 1).getTurno())) {
-                    i++;
-                    diasEnvioAcopio++;
-                }else if ((!datosAcopio.get(i).getFecha().equals(datosAcopio.get(i + 1).getFecha()))) {
-                    diasEnvioAcopio++;
-                }
-            } else{
-                try{
-                    if (((datosAcopio.get(i).getFecha().equals(datosAcopio.get(i - 1).getFecha())) &&
-                            !datosAcopio.get(i).getTurno().equals(datosAcopio.get(i - 1).getTurno())) || (!datosAcopio.get(i).getFecha().equals(datosAcopio.get(i - 1).getFecha()))) {
-                        diasEnvioAcopio++;
-                    }
-                } catch (Exception e) {
-                    logg.error("Error", e);
-                }
-            }
-            i++;
-        }
         if(datosAcopio.size() == 1){
             diasEnvioAcopio++;
+        }else {
+            while (i < (datosAcopio.size())) {
+                if (i < (datosAcopio.size() - 1)) {
+                    if ((datosAcopio.get(i).getFecha().equals(datosAcopio.get(i + 1).getFecha())) &&
+                            !datosAcopio.get(i).getTurno().equals(datosAcopio.get(i + 1).getTurno())) {
+                        i++;
+                        diasEnvioAcopio++;
+                    } else if ((!datosAcopio.get(i).getFecha().equals(datosAcopio.get(i + 1).getFecha()))) {
+                        diasEnvioAcopio++;
+                    }
+                } else {
+                    try {
+                        if ((!datosAcopio.get(i).getFecha().equals(datosAcopio.get(i - 1).getFecha())) || (!datosAcopio.get(i).getTurno().equals(datosAcopio.get(i - 1).getTurno()))){
+                            diasEnvioAcopio++;
+                        }
+                    } catch (Exception e) {
+                        logg.error("Error", e);
+                    }
+                }
+                i++;
+            }
         }
         return diasEnvioAcopio;
     }
