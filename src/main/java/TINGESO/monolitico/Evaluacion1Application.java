@@ -1,4 +1,4 @@
-package TINGESO.Evaluacion1;
+package TINGESO.monolitico;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,10 +1,9 @@
-package TINGESO.Evaluacion1.Services;
+package TINGESO.monolitico.Services;
 
-import TINGESO.Evaluacion1.Entities.DatosAcopioEntity;
-import TINGESO.Evaluacion1.Entities.DatosLaboratorioEntity;
-import TINGESO.Evaluacion1.Entities.PagoEntity;
-import TINGESO.Evaluacion1.Entities.ProveedorEntity;
-import TINGESO.Evaluacion1.Repositories.PagoRepository;
+import TINGESO.monolitico.Entities.DatosAcopioEntity;
+import TINGESO.monolitico.Entities.PagoEntity;
+import TINGESO.monolitico.Entities.ProveedorEntity;
+import TINGESO.monolitico.Repositories.PagoRepository;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,4 +1,4 @@
-package TINGESO.Evaluacion1.Entities;
+package TINGESO.monolitico.Entities;
 
 
 import jakarta.persistence.*;

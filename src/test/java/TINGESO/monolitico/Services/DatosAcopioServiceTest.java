@@ -1,4 +1,4 @@
-package TINGESO.Evaluacion1.Services;
+package TINGESO.monolitico.Services;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import TINGESO.Evaluacion1.Entities.DatosAcopioEntity;
-import TINGESO.Evaluacion1.Repositories.DatosAcopioRepository;
+import TINGESO.monolitico.Entities.DatosAcopioEntity;
+import TINGESO.monolitico.Repositories.DatosAcopioRepository;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;

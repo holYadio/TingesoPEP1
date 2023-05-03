@@ -1,7 +1,7 @@
-package TINGESO.Evaluacion1.Controllers;
+package TINGESO.monolitico.Controllers;
 
-import TINGESO.Evaluacion1.Services.ProveedorService;
-import TINGESO.Evaluacion1.Entities.ProveedorEntity;
+import TINGESO.monolitico.Services.ProveedorService;
+import TINGESO.monolitico.Entities.ProveedorEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

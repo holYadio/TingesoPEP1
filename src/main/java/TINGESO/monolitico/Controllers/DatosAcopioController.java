@@ -1,8 +1,8 @@
-package TINGESO.Evaluacion1.Controllers;
+package TINGESO.monolitico.Controllers;
 
 
-import TINGESO.Evaluacion1.Entities.DatosAcopioEntity;
-import TINGESO.Evaluacion1.Services.DatosAcopioService;
+import TINGESO.monolitico.Entities.DatosAcopioEntity;
+import TINGESO.monolitico.Services.DatosAcopioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

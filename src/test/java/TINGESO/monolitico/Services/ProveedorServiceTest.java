@@ -1,16 +1,16 @@
-package TINGESO.Evaluacion1.Services;
+package TINGESO.monolitico.Services;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 
+import TINGESO.monolitico.Entities.ProveedorEntity;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import TINGESO.Evaluacion1.Entities.ProveedorEntity;
-import TINGESO.Evaluacion1.Repositories.ProveedorRepository;
+import TINGESO.monolitico.Repositories.ProveedorRepository;
 
 @SpringBootTest
 public class ProveedorServiceTest {

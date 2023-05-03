@@ -1,7 +1,7 @@
-package TINGESO.Evaluacion1.Services;
+package TINGESO.monolitico.Services;
 
-import TINGESO.Evaluacion1.Entities.DatosLaboratorioEntity;
-import TINGESO.Evaluacion1.Repositories.DatosLaboratorioRepository;
+import TINGESO.monolitico.Entities.DatosLaboratorioEntity;
+import TINGESO.monolitico.Repositories.DatosLaboratorioRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

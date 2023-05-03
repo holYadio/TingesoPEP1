@@ -1,7 +1,7 @@
-package TINGESO.Evaluacion1.Controllers;
+package TINGESO.monolitico.Controllers;
 
-import TINGESO.Evaluacion1.Entities.DatosLaboratorioEntity;
-import TINGESO.Evaluacion1.Services.DatosLaboratorioService;
+import TINGESO.monolitico.Entities.DatosLaboratorioEntity;
+import TINGESO.monolitico.Services.DatosLaboratorioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller

@@ -1,7 +1,7 @@
-package TINGESO.Evaluacion1.Services;
+package TINGESO.monolitico.Services;
 
-import TINGESO.Evaluacion1.Repositories.ProveedorRepository;
-import TINGESO.Evaluacion1.Entities.ProveedorEntity;
+import TINGESO.monolitico.Repositories.ProveedorRepository;
+import TINGESO.monolitico.Entities.ProveedorEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

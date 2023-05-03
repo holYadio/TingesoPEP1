@@ -1,4 +1,4 @@
-package TINGESO.Evaluacion1;
+package TINGESO.monolitico;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,6 +1,6 @@
-package TINGESO.Evaluacion1.Repositories;
+package TINGESO.monolitico.Repositories;
 
-import TINGESO.Evaluacion1.Entities.DatosAcopioEntity;
+import TINGESO.monolitico.Entities.DatosAcopioEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
