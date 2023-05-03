@@ -26,7 +26,7 @@ public class DatosLaboratorioService {
     private final Logger logg = LoggerFactory.getLogger(DatosLaboratorioService.class);
 
     public List<DatosLaboratorioEntity> obtenerDatosLaboratorio() {
-        return (List<DatosLaboratorioEntity>) datosLaboratorioRepository.findAll();
+        return datosLaboratorioRepository.findAll();
     }
 
     public List<DatosLaboratorioEntity> obtenerDatosLaboratorioPorProveedor(String proveedor) {
@@ -61,11 +61,10 @@ public class DatosLaboratorioService {
 
     @Generated
     public void leerCsv(String direccion, String quincena){
-        String texto = "";
         BufferedReader bf = null;
         try{
             bf = new BufferedReader(new FileReader(direccion));
-            String temp = "";
+            StringBuilder temp = new StringBuilder();
             String bfRead;
             int count = 1;
             while((bfRead = bf.readLine()) != null){
@@ -74,10 +73,9 @@ public class DatosLaboratorioService {
                 }
                 else{
                     guardarDatoDB(bfRead.split(";")[0], bfRead.split(";")[1], bfRead.split(";")[2],quincena);
-                    temp = temp + "\n" + bfRead;
+                    temp.append("\n").append(bfRead);
                 }
             }
-            texto = temp;
             System.out.println("Archivo de analisis del Laboratiorio leido exitosamente");
         }catch(Exception e){
             System.err.println("No se encontro el archivo de analisis del Laboratiorio");
@@ -92,16 +90,16 @@ public class DatosLaboratorioService {
         }
     }
 
-    public void guardarDatoDB(String proveedor, String porcentaje_grasa, String porcentaje_solido_total, String quincena){
+    public void guardarDatoDB(String proveedor, String porcentajeGrasa, String porcentajeSolidoTotal, String quincena){
         DatosLaboratorioEntity newData = new DatosLaboratorioEntity();
         newData.setProveedor(proveedor);
-        newData.setPorcentaje_grasa(porcentaje_grasa);
-        newData.setPorcentaje_solido_total(porcentaje_solido_total);
+        newData.setPorcentajeGrasa(porcentajeGrasa);
+        newData.setPorcentajeSolidoTotal(porcentajeSolidoTotal);
         newData.setQuincena(quincena);
         datosLaboratorioRepository.save(newData);
     }
 
-    public double getVariacion_solido_total(String quincenaActual,
+    public double getVariacionSolidoTotal(String quincenaActual,
                                              String proveedor,
                                              String porcentajeSolidos) {
         double solidosAnterior;
@@ -111,7 +109,7 @@ public class DatosLaboratorioService {
         try{
             porcentajeSolidosAnterior = this.obtenerDatosLaboratorioPorProveedorYQuincena(
                     proveedor,
-                    quincenaAnterior).getPorcentaje_solido_total();
+                    quincenaAnterior).getPorcentajeSolidoTotal();
             solidosAnterior = Integer.parseInt(porcentajeSolidosAnterior);
         }catch (Exception e){
             solidosAnterior = solidosActual;
@@ -123,7 +121,7 @@ public class DatosLaboratorioService {
         return variacion;
     }
 
-    public double getVariacion_grasa(String quincenaActual,
+    public double getVariacionGrasa(String quincenaActual,
                                       String proveedor,
                                       String porcentajeGrasa) {
         double grasaAnterior;
@@ -133,7 +131,7 @@ public class DatosLaboratorioService {
         try{
             porcentajeGrasaAnterior = this.obtenerDatosLaboratorioPorProveedorYQuincena(
                     proveedor,
-                    quincenaAnterior).getPorcentaje_grasa();
+                    quincenaAnterior).getPorcentajeGrasa();
             grasaAnterior = Integer.parseInt(porcentajeGrasaAnterior);
         }catch (Exception e){
             grasaAnterior = grasaActual;

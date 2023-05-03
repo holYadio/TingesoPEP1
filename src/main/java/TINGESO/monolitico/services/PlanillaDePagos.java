@@ -31,7 +31,7 @@ public class PlanillaDePagos {
      * @return pagos Lista de pagos
      */
     public List<PagoEntity> obtenerPagos(){
-        return (List<PagoEntity>) pagoRepository.findAll();
+        return pagoRepository.findAll();
     }
 
     /*
@@ -47,12 +47,12 @@ public class PlanillaDePagos {
      * @param datosAcopioEntity Objeto que tiene la información de los datos subidos por el proveedor
      * @return pago
      */
-    public double calcularPagoPorCategoria(ProveedorEntity proveedor,double kls_leche) {
+    public double calcularPagoPorCategoria(ProveedorEntity proveedor,double klsLeche) {
         return switch (proveedor.getCategoria()) {
-            case "A" -> kls_leche * 700;
-            case "B" -> kls_leche * 550;
-            case "C" -> kls_leche * 400;
-            case "D" -> kls_leche * 250;
+            case "A" -> klsLeche * 700;
+            case "B" -> klsLeche * 550;
+            case "C" -> klsLeche * 400;
+            case "D" -> klsLeche * 250;
             default -> 0;
         };
     }
@@ -63,9 +63,9 @@ public class PlanillaDePagos {
      * @param datosAcopioEntity Objeto que tiene la información de los datos subidos por el proveedor
      * @return pago Cantidad que se le debe pagar al proveedor asociado al porcentaje de grasas de la leche
      */
-    public double calcularPagoPorGrasas(String Grasa, double kls_leche) {
+    public double calcularPagoPorGrasas(String grasa, double klsLeche) {
         double pago = 0;
-        int grasas = Integer.parseInt(Grasa);
+        int grasas = Integer.parseInt(grasa);
         if (grasas >= 0 && grasas <= 20) {
             pago = 30;
         }
@@ -75,7 +75,7 @@ public class PlanillaDePagos {
         else if (grasas >= 46) {
             pago = 120;
         }
-        return pago * kls_leche;
+        return pago * klsLeche;
     }
 
     /*
@@ -84,7 +84,7 @@ public class PlanillaDePagos {
      * @param datosAcopioEntity Objeto que tiene la información de los datos subidos por el proveedor
      * @return pago Cantidad que se le debe pagar al proveedor asociado al porcentaje de solidos de la leche
      */
-    public double calcularPagoPorSolidosTotales(String solido, double kls_leche) {
+    public double calcularPagoPorSolidosTotales(String solido, double klsLeche) {
         double pagoSolido = 0;
         int solidos = Integer.parseInt(solido);
         if (solidos >= 0 && solidos <= 7) {
@@ -99,7 +99,7 @@ public class PlanillaDePagos {
         else if (solidos >= 36) {
             pagoSolido = 150;
         }
-        return pagoSolido*kls_leche;
+        return pagoSolido * klsLeche;
     }
 
     /*
@@ -120,8 +120,6 @@ public class PlanillaDePagos {
                 contadorT++;
             }
         }
-        System.out.println(contadorM);
-        System.out.println(contadorT);
         if(contadorM > 10 && contadorT > 10){
             bonificacion = 20;
         }
@@ -135,7 +133,7 @@ public class PlanillaDePagos {
     }
 
     public double calcularDescuentoPorVariacionLeche(String quincena, String codigoProveedor, double klsTotalLeche, double pagoAcopioLeche) {
-        double porcentajeVariacionLeche = datosAcopioService.getVariacion_leche(quincena, codigoProveedor, klsTotalLeche);
+        double porcentajeVariacionLeche = datosAcopioService.getVariacionLeche(quincena, codigoProveedor, klsTotalLeche);
         double descuento;
         if ((porcentajeVariacionLeche >= 0) && (porcentajeVariacionLeche <= 8)) {
             descuento = 0;
@@ -203,139 +201,138 @@ public class PlanillaDePagos {
         String quincena;
         String codigoProveedor;
         String nombreProveedor;
-        double KlsTotalLeche;
+        double klsTotalLeche;
         String diasEnvioLeche;
-        String PromedioKilosLecheDiario;
-        String PorcentajeFrecuenciaDiariaEnvioLeche;
-        String PorcentajeGrasa;
-        double PorcentajeVariacionGrasa;
-        String PorcentajeSolidoTotal;
-        double PorcentajeVariacionSolidoTotal;
-        double PagoPorLeche;
-        double PagoPorGrasa;
-        double PagoPorSolidosTotales;
-        double BonificacionPorFrecuencia;
-        double DctoVariacionLeche;
-        double DctoVariacionGrasa;
-        double DctoVariacionST;
-        double PagoTOTAL;
-        double MontoRetencion;
-        String MontoFINAL;
+        String promedioKilosLecheDiario;
+        String porcentajeFrecuenciaDiariaEnvioLeche;
+        String porcentajeGrasa;
+        double porcentajeVariacionGrasa;
+        String porcentajeSolidoTotal;
+        double porcentajeVariacionSolidoTotal;
+        double pagoPorLeche;
+        double pagoPorGrasa;
+        double pagoPorSolidosTotales;
+        double bonificacionPorFrecuencia;
+        double dctoVariacionLeche;
+        double dctoVariacionGrasa;
+        double dctoVariacionST;
+        double pagoTotal;
+        double montoRetencion;
+        String montoFinal;
+        double pagoAcopioLeche;
+        double dctoTotal;
         for (int i = 0; i < (datosLaboratorio.size()); i++) {
-            double PagoAcopioLeche;
-            double DctoTotal;
             quincena = datosLaboratorio.get(i).getQuincena();
             codigoProveedor = datosLaboratorio.get(i).getProveedor();
             List<DatosAcopioEntity> datosAcopioQuincena = datosAcopioService.obtenerDatosAcopioPorQuincenayProveedor(
                     quincena, codigoProveedor);
             nombreProveedor = proveedorService.obtenerNombreProveedor(codigoProveedor);
-            KlsTotalLeche = datosAcopioService.KlsTotalLeche(datosAcopioQuincena);
+            klsTotalLeche = datosAcopioService.klsTotalLeche(datosAcopioQuincena);
             diasEnvioLeche = String.valueOf(datosAcopioService.diasEnvioLeche(datosAcopioQuincena));
-            PromedioKilosLecheDiario = String.valueOf(KlsTotalLeche/15);
-            PorcentajeFrecuenciaDiariaEnvioLeche = String.valueOf(datosAcopioService.getVariacion_leche(quincena,codigoProveedor,KlsTotalLeche));//Preguntar al profe
-            PorcentajeGrasa = datosLaboratorio.get(i).getPorcentaje_grasa();
-            PorcentajeVariacionGrasa = datosLaboratorioService.getVariacion_grasa(quincena,
+            promedioKilosLecheDiario = String.valueOf(klsTotalLeche/15);
+            porcentajeFrecuenciaDiariaEnvioLeche = String.valueOf(datosAcopioService.getVariacionLeche(quincena,codigoProveedor,klsTotalLeche));//Preguntar al profe
+            porcentajeGrasa = datosLaboratorio.get(i).getPorcentajeGrasa();
+            porcentajeVariacionGrasa = datosLaboratorioService.getVariacionGrasa(quincena,
                     codigoProveedor,
-                    PorcentajeGrasa);
-            PorcentajeSolidoTotal = datosLaboratorio.get(i).getPorcentaje_solido_total();
-            PorcentajeVariacionSolidoTotal = datosLaboratorioService.getVariacion_solido_total(quincena,
+                    porcentajeGrasa);
+            porcentajeSolidoTotal = datosLaboratorio.get(i).getPorcentajeSolidoTotal();
+            porcentajeVariacionSolidoTotal = datosLaboratorioService.getVariacionSolidoTotal(quincena,
                     codigoProveedor,
-                    PorcentajeSolidoTotal);
-            PagoPorLeche = this.calcularPagoPorCategoria(
+                    porcentajeSolidoTotal);
+            pagoPorLeche = this.calcularPagoPorCategoria(
                     proveedorService.obtenerProveedorPorId(codigoProveedor),
-                    KlsTotalLeche);
-            PagoPorGrasa = this.calcularPagoPorGrasas(PorcentajeGrasa,
-                    KlsTotalLeche);
-            PagoPorSolidosTotales =this.calcularPagoPorSolidosTotales(PorcentajeSolidoTotal,
-                    KlsTotalLeche);
-            BonificacionPorFrecuencia = this.calcularBonificacionPorFrecuencia(datosAcopioQuincena,
-                    PagoPorLeche);
-            PagoAcopioLeche = PagoPorLeche +
-                    PagoPorGrasa +
-                    PagoPorSolidosTotales +
-                    BonificacionPorFrecuencia;
-            DctoVariacionLeche= this.calcularDescuentoPorVariacionLeche(quincena,
+                    klsTotalLeche);
+            pagoPorGrasa = this.calcularPagoPorGrasas(porcentajeGrasa,
+                    klsTotalLeche);
+            pagoPorSolidosTotales =this.calcularPagoPorSolidosTotales(porcentajeSolidoTotal,
+                    klsTotalLeche);
+            bonificacionPorFrecuencia = this.calcularBonificacionPorFrecuencia(datosAcopioQuincena,
+                    pagoPorLeche);
+            pagoAcopioLeche = pagoPorLeche +
+                    pagoPorGrasa +
+                    pagoPorSolidosTotales +
+                    bonificacionPorFrecuencia;
+            dctoVariacionLeche= this.calcularDescuentoPorVariacionLeche(quincena,
                     codigoProveedor,
-                    KlsTotalLeche,
-                    PagoAcopioLeche);
-            DctoVariacionGrasa = this.calcularDescuentoPorVariacionGrasa(PorcentajeVariacionGrasa,
-                    PagoAcopioLeche);
-            DctoVariacionST= this.calcularDescuentoPorVariacionSolidosTotales(PorcentajeVariacionSolidoTotal,
-                    PagoAcopioLeche);
-            DctoTotal = DctoVariacionLeche +
-                    DctoVariacionGrasa +
-                    DctoVariacionST;
-            PagoTOTAL = PagoAcopioLeche - DctoTotal;
-            MontoRetencion= this.calcularRetencion(PagoTOTAL);
-            MontoFINAL = String.valueOf(PagoTOTAL - MontoRetencion);
-
+                    klsTotalLeche,
+                    pagoAcopioLeche);
+            dctoVariacionGrasa = this.calcularDescuentoPorVariacionGrasa(porcentajeVariacionGrasa,
+                    pagoAcopioLeche);
+            dctoVariacionST= this.calcularDescuentoPorVariacionSolidosTotales(porcentajeVariacionSolidoTotal,
+                    pagoAcopioLeche);
+            dctoTotal = dctoVariacionLeche +
+                    dctoVariacionGrasa +
+                    dctoVariacionST;
+            pagoTotal = pagoAcopioLeche - dctoTotal;
+            montoRetencion= this.calcularRetencion(pagoTotal);
+            montoFinal = String.valueOf(pagoTotal - montoRetencion);
             guardarPagoDB(quincena,
                     codigoProveedor,
                     nombreProveedor,
-                    String.valueOf(KlsTotalLeche),
+                    String.valueOf(klsTotalLeche),
                     diasEnvioLeche,
-                    PromedioKilosLecheDiario,
-                    PorcentajeFrecuenciaDiariaEnvioLeche,
-                    PorcentajeGrasa,
-                    String.valueOf(PorcentajeVariacionGrasa),
-                    PorcentajeSolidoTotal,
-                    String.valueOf(PorcentajeVariacionSolidoTotal),
-                    String.valueOf(PagoPorLeche),
-                    String.valueOf(PagoPorGrasa),
-                    String.valueOf(PagoPorSolidosTotales),
-                    String.valueOf(BonificacionPorFrecuencia),
-                    String.valueOf(DctoVariacionLeche),
-                    String.valueOf(DctoVariacionGrasa),
-                    String.valueOf(DctoVariacionST),
-                    String.valueOf(PagoTOTAL),
-                    String.valueOf(MontoRetencion),
-                    MontoFINAL);
+                    promedioKilosLecheDiario,
+                    porcentajeFrecuenciaDiariaEnvioLeche,
+                    porcentajeGrasa,
+                    String.valueOf(porcentajeVariacionGrasa),
+                    porcentajeSolidoTotal,
+                    String.valueOf(porcentajeVariacionSolidoTotal),
+                    String.valueOf(pagoPorLeche),
+                    String.valueOf(pagoPorGrasa),
+                    String.valueOf(pagoPorSolidosTotales),
+                    String.valueOf(bonificacionPorFrecuencia),
+                    String.valueOf(dctoVariacionLeche),
+                    String.valueOf(dctoVariacionGrasa),
+                    String.valueOf(dctoVariacionST),
+                    String.valueOf(pagoTotal),
+                    String.valueOf(montoRetencion),
+                    montoFinal);
         }
     }
 
     public void guardarPagoDB(String quincena,
                               String codigoProveedor,
                               String nombreProveedor,
-                              String KlsTotalLeche,
+                              String klsTotalLeche,
                               String diasEnvioLeche,
-                              String PromedioKilosLecheDiario,
-                              String PorcentajeFrecuenciaDiariaEnvioLeche,
-                              String PorcentajeGrasa,
-                              String PorcentajeVariacionGrasa,
-                              String PorcentajeSolidoTotal,
-                              String PorcentajeVariacionSolidoTotal,
-                              String PagoPorLeche,
-                              String PagoPorGrasa,
-                              String PagoPorSolidosTotales,
-                              String BonificacionPorFrecuencia,
-                              String DctoVariacionLeche,
-                              String DctoVariacionGrasa,
-                              String DctoVariacionST,
-                              String PagoTOTAL,
-                              String MontoRetencion,
-                              String MontoFINAL){
+                              String promedioKilosLecheDiario,
+                              String porcentajeFrecuenciaDiariaEnvioLeche,
+                              String porcentajeGrasa,
+                              String porcentajeVariacionGrasa,
+                              String porcentajeSolidoTotal,
+                              String porcentajeVariacionSolidoTotal,
+                              String pagoPorLeche,
+                              String pagoPorGrasa,
+                              String pagoPorSolidosTotales,
+                              String bonificacionPorFrecuencia,
+                              String dctoVariacionLeche,
+                              String dctoVariacionGrasa,
+                              String dctoVariacionST,
+                              String pagoTotal,
+                              String montoRetencion,
+                              String montoFinal){
         PagoEntity pago = new PagoEntity();
         pago.setQuincena(quincena);
         pago.setCodigoProveedor(codigoProveedor);
         pago.setNombreProveedor(nombreProveedor);
-        pago.setKlsTotalLeche(KlsTotalLeche);
+        pago.setKlsTotalLeche(klsTotalLeche);
         pago.setDiasEnvioLeche(diasEnvioLeche);
-        pago.setPromedioKilosLecheDiario(PromedioKilosLecheDiario);
-        pago.setPorcentajeFrecuenciaDiariaEnvioLeche(PorcentajeFrecuenciaDiariaEnvioLeche);
-        pago.setPorcentajeGrasa(PorcentajeGrasa);
-        pago.setPorcentajeVariacionGrasa(PorcentajeVariacionGrasa);
-        pago.setPorcentajeSolidoTotal(PorcentajeSolidoTotal);
-        pago.setPorcentajeVariacionSolidoTotal(PorcentajeVariacionSolidoTotal);
-        pago.setPagoPorLeche(PagoPorLeche);
-        pago.setPagoPorGrasa(PagoPorGrasa);
-        pago.setPagoPorSolidosTotales(PagoPorSolidosTotales);
-        pago.setBonificacionPorFrecuencia(BonificacionPorFrecuencia);
-        pago.setDctoVariacionLeche(DctoVariacionLeche);
-        pago.setDctoVariacionGrasa(DctoVariacionGrasa);
-        pago.setDctoVariacionST(DctoVariacionST);
-        pago.setPagoTOTAL(PagoTOTAL);
-        pago.setMontoRetencion(MontoRetencion);
-        pago.setMontoFINAL(MontoFINAL);
+        pago.setPromedioKilosLecheDiario(promedioKilosLecheDiario);
+        pago.setPorcentajeFrecuenciaDiariaEnvioLeche(porcentajeFrecuenciaDiariaEnvioLeche);
+        pago.setPorcentajeGrasa(porcentajeGrasa);
+        pago.setPorcentajeVariacionGrasa(porcentajeVariacionGrasa);
+        pago.setPorcentajeSolidoTotal(porcentajeSolidoTotal);
+        pago.setPorcentajeVariacionSolidoTotal(porcentajeVariacionSolidoTotal);
+        pago.setPagoPorLeche(pagoPorLeche);
+        pago.setPagoPorGrasa(pagoPorGrasa);
+        pago.setPagoPorSolidosTotales(pagoPorSolidosTotales);
+        pago.setBonificacionPorFrecuencia(bonificacionPorFrecuencia);
+        pago.setDctoVariacionLeche(dctoVariacionLeche);
+        pago.setDctoVariacionGrasa(dctoVariacionGrasa);
+        pago.setDctoVariacionST(dctoVariacionST);
+        pago.setPagoTotal(pagoTotal);
+        pago.setMontoRetencion(montoRetencion);
+        pago.setMontoFinal(montoFinal);
         pagoRepository.save(pago);
     }
 }

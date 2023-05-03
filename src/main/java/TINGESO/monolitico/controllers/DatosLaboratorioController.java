@@ -26,11 +26,11 @@ public class DatosLaboratorioController {
     }
     @PostMapping("/SubirDatosLaboratorio")
     public String fileUpload(@RequestParam("file")MultipartFile file,
-                             @RequestParam("Quincena")String Quincena ,
+                             @RequestParam("Quincena")String quincena ,
                              RedirectAttributes redirectAttributes){
         datosLaboratorioService.guardarDatosLab(file);
         redirectAttributes.addFlashAttribute("mensaje", "Archivo subido correctamente");
-        datosLaboratorioService.leerCsv(file.getOriginalFilename(), Quincena);
+        datosLaboratorioService.leerCsv(file.getOriginalFilename(), quincena);
         return "redirect:/SubirDatosLaboratorio";
     }
 

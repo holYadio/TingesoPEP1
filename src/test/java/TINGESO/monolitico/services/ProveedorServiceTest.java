@@ -13,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import tingeso.monolitico.repositories.ProveedorRepository;
 
 @SpringBootTest
-public class ProveedorServiceTest {
+class ProveedorServiceTest {
 
     @Mock
     private ProveedorRepository proveedorRepository;

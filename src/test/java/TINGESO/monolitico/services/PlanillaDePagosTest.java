@@ -186,9 +186,9 @@ class PlanillaDePagosTest {
         expectedPago.setDctoVariacionLeche(DctoVariacionLeche);
         expectedPago.setDctoVariacionGrasa(DctoVariacionGrasa);
         expectedPago.setDctoVariacionST(DctoVariacionST);
-        expectedPago.setPagoTOTAL(PagoTOTAL);
+        expectedPago.setPagoTotal(PagoTOTAL);
         expectedPago.setMontoRetencion(MontoRetencion);
-        expectedPago.setMontoFINAL(MontoFINAL);
+        expectedPago.setMontoFinal(MontoFINAL);
         planillaDePagos.guardarPagoDB(quincena, codigoProveedor, nombreProveedor, KlsTotalLeche, diasEnvioLeche, PromedioKilosLecheDiario, PorcentajeFrecuenciaDiariaEnvioLeche, PorcentajeGrasa, PorcentajeVariacionGrasa, PorcentajeSolidoTotal, PorcentajeVariacionSolidoTotal, PagoPorLeche, PagoPorGrasa, PagoPorSolidosTotales, BonificacionPorFrecuencia, DctoVariacionLeche, DctoVariacionGrasa, DctoVariacionST, PagoTOTAL, MontoRetencion, MontoFINAL);
         verify(pagoRepository).save(expectedPago);
     }
@@ -238,9 +238,9 @@ class PlanillaDePagosTest {
         expectedPago.setDctoVariacionLeche(DctoVariacionLeche);
         expectedPago.setDctoVariacionGrasa(DctoVariacionGrasa);
         expectedPago.setDctoVariacionST(DctoVariacionST);
-        expectedPago.setPagoTOTAL(PagoTOTAL);
+        expectedPago.setPagoTotal(PagoTOTAL);
         expectedPago.setMontoRetencion(MontoRetencion);
-        expectedPago.setMontoFINAL(MontoFINAL);
+        expectedPago.setMontoFinal(MontoFINAL);
         planillaDePagos.guardarPagoDB(quincena, codigoProveedor, nombreProveedor, KlsTotalLeche, diasEnvioLeche, PromedioKilosLecheDiario, PorcentajeFrecuenciaDiariaEnvioLeche, PorcentajeGrasa, PorcentajeVariacionGrasa, PorcentajeSolidoTotal, PorcentajeVariacionSolidoTotal, PagoPorLeche, PagoPorGrasa, PagoPorSolidosTotales, BonificacionPorFrecuencia, DctoVariacionLeche, DctoVariacionGrasa, DctoVariacionST, PagoTOTAL, MontoRetencion, MontoFINAL);
         verify(pagoRepository).save(expectedPago);
     }

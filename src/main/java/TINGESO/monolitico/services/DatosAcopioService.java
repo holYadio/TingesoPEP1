@@ -29,23 +29,23 @@ public class DatosAcopioService {
     private final Logger logg = LoggerFactory.getLogger(DatosAcopioService.class);
 
     public List<DatosAcopioEntity> obtenerDatosAcopio() {
-        return (List<DatosAcopioEntity>) datosAcopioRepository.findAll();
+        return datosAcopioRepository.findAll();
     }
 
     public List<DatosAcopioEntity> obtenerDatosAcopioPorProveedor(String proveedor) {
-        return (List<DatosAcopioEntity>) datosAcopioRepository.findByProveedor(proveedor);
+        return datosAcopioRepository.findByProveedor(proveedor);
     }
 
     /* Funcion para obtener los acopios asociados a una quincena en especifico
      * @param Quincena: String con el formato "AAAA/MM/Q1" o "AAAA/MM/Q2"
      * @return ArrayList<DatosAcopioEntity> con los datos de los acopios asociados a la quincena
      */
-    public List<DatosAcopioEntity> obtenerDatosAcopioPorQuincenayProveedor(String Quincena, String proveedor) {
-        List<DatosAcopioEntity> datosAcopio = (List<DatosAcopioEntity>) datosAcopioRepository.findAll();
+    public List<DatosAcopioEntity> obtenerDatosAcopioPorQuincenayProveedor(String quincena, String proveedor) {
+        List<DatosAcopioEntity> datosAcopio = datosAcopioRepository.findAll();
         List<DatosAcopioEntity> datosAcopioPorQuincena = new ArrayList<>();
-        int anioQuincena = Integer.parseInt(Quincena.split("/")[0]);
-        int mesQuincena = Integer.parseInt(Quincena.split("/")[1]);
-        String numQuincena = Quincena.split("/")[2];
+        int anioQuincena = Integer.parseInt(quincena.split("/")[0]);
+        int mesQuincena = Integer.parseInt(quincena.split("/")[1]);
+        String numQuincena = quincena.split("/")[2];
         for (DatosAcopioEntity datosAcopioEntity : datosAcopio) {
             String fechaDatoAcopio = datosAcopioEntity.getFecha();
             int anio = Integer.parseInt(fechaDatoAcopio.split("/")[0]);
@@ -55,10 +55,9 @@ public class DatosAcopioService {
                 if (anio == anioQuincena && mes == mesQuincena && (dia <= 15) && (dia >= 1) && datosAcopioEntity.getProveedor().equals(proveedor)) {
                     datosAcopioPorQuincena.add(datosAcopioEntity);
                 }
-            }else if (numQuincena.equals("Q2")) {
-                if (anio == anioQuincena && mes == mesQuincena && (dia <= 31) && (dia >= 16) && datosAcopioEntity.getProveedor().equals(proveedor)) {
+            }else if (numQuincena.equals("Q2") && (anio == anioQuincena && mes == mesQuincena && (dia <= 31) && (dia >= 16) && datosAcopioEntity.getProveedor().equals(proveedor))) {
                     datosAcopioPorQuincena.add(datosAcopioEntity);
-                }
+
             }
         }
         return datosAcopioPorQuincena;
@@ -76,7 +75,8 @@ public class DatosAcopioService {
                     logg.info("Archivo de Acopio subido correctamente");
                 }
                 catch (IOException e){
-                    logg.error("Error", e);
+                    logg.error("Error",
+                            e);
                 }
             }
             return "Archivo de Acopio guardado";
@@ -87,33 +87,31 @@ public class DatosAcopioService {
     }
 
     @Generated
-    public void leerCsvProveedor(String Direccion){
-        String texto = "";
-        BufferedReader bf = null;
+    public void leerCsvProveedor(String direccion){
+        BufferedReader br = null;
         try{
-            bf = new BufferedReader(new FileReader(Direccion));
-            String temp = "";
+            br = new BufferedReader(new FileReader(direccion));
+            StringBuilder temp = new StringBuilder();
             String bfRead;
             int count = 1;
-            while ((bfRead = bf.readLine()) != null) {
+            while ((bfRead = br.readLine()) != null) {
                 if (count == 1) {
                     count = 0;
                 }
                 else {
                     guardarDatoProveedorDB(bfRead.split(";")[0], bfRead.split(";")[1], bfRead.split(";")[2], bfRead.split(";")[3]);
-                    temp = temp + "\n" + bfRead;
+                    temp.append("\n").append(bfRead);
                 }
             }
-            texto = temp;
-            System.out.println("Archivo de Acopio leido correctamente");
+            logg.info("Archivo de Acopio leido correctamente");
         }
         catch (Exception e){
-            System.out.println("Error al leer el archivo de Acopio");
+            logg.error("Error al leer el archivo de Acopio",e);
         }
         finally {
             try{
-                if (null != bf){
-                    bf.close();
+                if (null != br){
+                    br.close();
                 }
             }
             catch (IOException e){
@@ -122,29 +120,30 @@ public class DatosAcopioService {
         }
     }
 
-    public void guardarDatoProveedorDB(String fecha, String turno, String proveedor, String kls_leche){
+    public void guardarDatoProveedorDB(String fecha, String turno, String proveedor, String klsLeche){
         DatosAcopioEntity newDato = new DatosAcopioEntity();
         newDato.setFecha(fecha);
         newDato.setTurno(turno);
         newDato.setProveedor(proveedor);
-        newDato.setKls_leche(kls_leche);
+        newDato.setKlsLeche(klsLeche);
         datosAcopioRepository.save(newDato);
     }
 
 
 
-    public double KlsTotalLeche(List<DatosAcopioEntity> datosAcopio){
-        double KlsTotalLeche = 0;
+    public double klsTotalLeche(List<DatosAcopioEntity> datosAcopio){
+        double klsTotalLeche = 0;
         for (DatosAcopioEntity datos : datosAcopio) {
-            KlsTotalLeche += Integer.parseInt(datos.getKls_leche());
+            klsTotalLeche += Integer.parseInt(datos.getKlsLeche());
         }
-        return KlsTotalLeche;
+        return klsTotalLeche;
     }
 
 
     public double diasEnvioLeche(List<DatosAcopioEntity> datosAcopio){
         double diasEnvioAcopio = 0;
-        for (int i = 0; i < (datosAcopio.size()); i++) {
+        int i = 0;
+        while (i < (datosAcopio.size())) {
             if(i < (datosAcopio.size() - 1)) {
                 if ((datosAcopio.get(i).getFecha().equals(datosAcopio.get(i + 1).getFecha())) &&
                         !datosAcopio.get(i).getTurno().equals(datosAcopio.get(i + 1).getTurno())) {
@@ -155,16 +154,15 @@ public class DatosAcopioService {
                 }
             } else{
                 try{
-                    if ((datosAcopio.get(i).getFecha().equals(datosAcopio.get(i - 1).getFecha())) &&
-                            !datosAcopio.get(i).getTurno().equals(datosAcopio.get(i - 1).getTurno())) {
-                        diasEnvioAcopio++;
-                    } else if ((!datosAcopio.get(i).getFecha().equals(datosAcopio.get(i - 1).getFecha()))) {
+                    if (((datosAcopio.get(i).getFecha().equals(datosAcopio.get(i - 1).getFecha())) &&
+                            !datosAcopio.get(i).getTurno().equals(datosAcopio.get(i - 1).getTurno())) || (!datosAcopio.get(i).getFecha().equals(datosAcopio.get(i - 1).getFecha()))) {
                         diasEnvioAcopio++;
                     }
                 } catch (Exception e) {
                     logg.error("Error", e);
                 }
             }
+            i++;
         }
         if(datosAcopio.size() == 1){
             diasEnvioAcopio++;
@@ -172,7 +170,7 @@ public class DatosAcopioService {
         return diasEnvioAcopio;
     }
 
-    public double getVariacion_leche(String quincena, String codigoProveedor, double klsTotalLeche) {
+    public double getVariacionLeche(String quincena, String codigoProveedor, double klsTotalLeche) {
         double klsLecheAnterior;
         String quincenaAnterior = datosLaboratorioService.quincenaAnterior(quincena);
         if (quincenaAnterior == null) {
@@ -180,7 +178,7 @@ public class DatosAcopioService {
         }else{
             List<DatosAcopioEntity> datosAcopioQuincena = this.obtenerDatosAcopioPorQuincenayProveedor(
                     quincenaAnterior, codigoProveedor);
-            klsLecheAnterior = this.KlsTotalLeche(datosAcopioQuincena);
+            klsLecheAnterior = this.klsTotalLeche(datosAcopioQuincena);
         }
         double variacion = klsLecheAnterior - klsTotalLeche;
         if (variacion <= 0) {

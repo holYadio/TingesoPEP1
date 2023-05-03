@@ -17,5 +17,5 @@ public class DatosAcopioEntity {
     private String fecha;
     private String turno;
     private String proveedor;
-    private String kls_leche;
+    private String klsLeche;
 }

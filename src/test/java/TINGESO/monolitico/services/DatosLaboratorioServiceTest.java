@@ -66,8 +66,8 @@ class DatosLaboratorioServiceTest {
         DatosLaboratorioEntity expectedDato = new DatosLaboratorioEntity();
         expectedDato.setId(null);
         expectedDato.setProveedor(proveedor);
-        expectedDato.setPorcentaje_grasa(porcentaje_grasa);
-        expectedDato.setPorcentaje_solido_total(porcentaje_solido_total);
+        expectedDato.setPorcentajeGrasa(porcentaje_grasa);
+        expectedDato.setPorcentajeSolidoTotal(porcentaje_solido_total);
         expectedDato.setQuincena(quincena);
 
         service.guardarDatoDB(proveedor, porcentaje_grasa, porcentaje_solido_total, quincena);
@@ -78,14 +78,14 @@ class DatosLaboratorioServiceTest {
     @Test
     void testGetVariacionSolidoTotal() {
         double resultadoEsperado = 0.0;
-        double resultadoActual = service.getVariacion_solido_total("2022/01/Q2", "01003", "50");
+        double resultadoActual = service.getVariacionSolidoTotal("2022/01/Q2", "01003", "50");
         assertEquals(resultadoEsperado, resultadoActual, "El resultado de getVariacion_solido_total no es el esperado");
     }
 
     @Test
     void testGetVariacionGrasa() {
         double resultadoEsperado = 0.0;
-        double resultadoActual = service.getVariacion_grasa("2022/01/Q2", "01003", "50");
+        double resultadoActual = service.getVariacionGrasa("2022/01/Q2", "01003", "50");
         assertEquals(resultadoEsperado, resultadoActual, "El resultado de getVariacion_solido_total no es el esperado");
     }
 
