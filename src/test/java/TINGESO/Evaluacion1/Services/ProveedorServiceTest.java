@@ -22,7 +22,7 @@ public class ProveedorServiceTest {
     private ProveedorService proveedorService;
 
     @Test
-    public void testObtenerProveedores() {
+    void testObtenerProveedores() {
         ArrayList<ProveedorEntity> proveedores = new ArrayList<>();
         proveedores.add(new ProveedorEntity());
         Mockito.when(proveedorRepository.findAll()).thenReturn(proveedores);
@@ -31,7 +31,7 @@ public class ProveedorServiceTest {
     }
 
     @Test
-    public void testObtenerNombreProveedor() {
+    void testObtenerNombreProveedor() {
         String codigo = "01003";
         ProveedorEntity proveedor = new ProveedorEntity();
         proveedor.setCodigo(codigo);
@@ -42,7 +42,7 @@ public class ProveedorServiceTest {
     }
 
     @Test
-    public void testObtenerProveedorPorId() {
+    void testObtenerProveedorPorId() {
         String codigo = "01003";
         ProveedorEntity proveedor = new ProveedorEntity();
         proveedor.setCodigo(codigo);
@@ -53,7 +53,7 @@ public class ProveedorServiceTest {
     }
 
     @Test
-    public void testGuardarProveedor() {
+    void testGuardarProveedor() {
         String codigo = "01003";
         String nombre = "Alcides";
         String categoria = "A";
