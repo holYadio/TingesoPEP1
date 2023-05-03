@@ -8,6 +8,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -24,7 +26,7 @@ class DatosLaboratorioServiceTest {
     void testObtenerDatosLaboratorio() {
         DatosLaboratorioEntity datosLaboratorio1 = new DatosLaboratorioEntity();
         DatosLaboratorioEntity datosLaboratorio2 = new DatosLaboratorioEntity();
-        ArrayList<DatosLaboratorioEntity> datosLaboratorioArrayList = new ArrayList<>();
+        List<DatosLaboratorioEntity> datosLaboratorioArrayList = new ArrayList<>();
         datosLaboratorioArrayList.add(datosLaboratorio1);
         datosLaboratorioArrayList.add(datosLaboratorio2);
         when(repository.findAll()).thenReturn(datosLaboratorioArrayList);
@@ -36,7 +38,7 @@ class DatosLaboratorioServiceTest {
     void testObtenerDatosLaboratorioPorProveedor() {
         DatosLaboratorioEntity datosLaboratorio1 = new DatosLaboratorioEntity();
         DatosLaboratorioEntity datosLaboratorio2 = new DatosLaboratorioEntity();
-        ArrayList<DatosLaboratorioEntity> datosLaboratorioArrayList = new ArrayList<>();
+        List<DatosLaboratorioEntity> datosLaboratorioArrayList = new ArrayList<>();
         datosLaboratorioArrayList.add(datosLaboratorio1);
         datosLaboratorioArrayList.add(datosLaboratorio2);
         String proveedor = "proveedor1";

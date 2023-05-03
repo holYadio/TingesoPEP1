@@ -4,10 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-
-import org.mockito.stubbing.OngoingStubbing;
-import org.slf4j.Logger;
+import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,13 +12,9 @@ import org.junit.jupiter.api.Test;
 
 import TINGESO.Evaluacion1.Entities.DatosAcopioEntity;
 import TINGESO.Evaluacion1.Repositories.DatosAcopioRepository;
-import TINGESO.Evaluacion1.Services.DatosLaboratorioService;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 @SpringBootTest
 public class DatosAcopioServiceTest {
@@ -44,11 +37,11 @@ public class DatosAcopioServiceTest {
 
     @Test
     void testObtenerDatosAcopioPorProveedor() {
-        ArrayList<DatosAcopioEntity> expected = new ArrayList<>();
+        List<DatosAcopioEntity> expected = new ArrayList<>();
         expected.add(new DatosAcopioEntity(1,"2023/01/01", "M", "01003", "10"));
         expected.add(new DatosAcopioEntity(2,"2023/01/01", "M", "01003", "10"));
         when(repository.findByProveedor("01003")).thenReturn(expected);
-        ArrayList<DatosAcopioEntity> result = service.obtenerDatosAcopioPorProveedor("01003");
+        List<DatosAcopioEntity> result = service.obtenerDatosAcopioPorProveedor("01003");
         assertEquals(expected, result);
     }
 
@@ -63,7 +56,7 @@ public class DatosAcopioServiceTest {
         expected.add(new DatosAcopioEntity(2,"2023/02/01", "M", "01003", "20"));
         expected.add(new DatosAcopioEntity(3,"2023/02/15", "M", "01003", "30"));
         when(repository.findAll()).thenReturn(datosAcopio);
-        ArrayList<DatosAcopioEntity> result = service.obtenerDatosAcopioPorQuincenayProveedor("2023/02/Q1", "01003");
+        List<DatosAcopioEntity> result = service.obtenerDatosAcopioPorQuincenayProveedor("2023/02/Q1", "01003");
         assertEquals(expected, result);
     }
 
@@ -88,7 +81,7 @@ public class DatosAcopioServiceTest {
 
     @Test
     void testKlsTotalLeche() {
-        ArrayList<DatosAcopioEntity> datosAcopio = new ArrayList<>();
+        List<DatosAcopioEntity> datosAcopio = new ArrayList<>();
         DatosAcopioEntity datos1 = new DatosAcopioEntity();
         DatosAcopioEntity datos2 = new DatosAcopioEntity();
         datos1.setKls_leche("20");

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ui.Model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping
@@ -20,7 +21,7 @@ public class PlanillaDePagosController {
     public String planillaDePagos(Model model) {
         planillaDePagos.deleteAll();
         planillaDePagos.calcularPagoFinal();
-        ArrayList<PagoEntity> pagos = planillaDePagos.obtenerPagos();
+        List<PagoEntity> pagos = planillaDePagos.obtenerPagos();
         model.addAttribute("pagos", pagos);
         return "reporte";
     }

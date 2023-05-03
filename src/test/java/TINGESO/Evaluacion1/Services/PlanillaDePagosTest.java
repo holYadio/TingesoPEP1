@@ -16,6 +16,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Mockito.verify;
 
@@ -48,7 +49,7 @@ class PlanillaDePagosTest {
         pagos.add(new PagoEntity(1,"2023/03/Q2", "01003", "Alcides", "150", "1", "10", "10", "1", "0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "150.0", "0.0", "0.0", "0.0", "0.0","0.0","0"));
 
         Mockito.when(pagoRepository.findAll()).thenReturn(pagos);
-        ArrayList<PagoEntity> resultado = planillaDePagos.obtenerPagos();
+        List<PagoEntity> resultado = planillaDePagos.obtenerPagos();
 
         Assertions.assertEquals(pagos, resultado);
     }

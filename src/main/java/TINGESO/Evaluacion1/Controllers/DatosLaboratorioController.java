@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping
@@ -36,7 +37,7 @@ public class DatosLaboratorioController {
 
     @GetMapping("/obtenerDatosLab")
     public String obtenerDatosLab(Model model){
-        ArrayList<DatosLaboratorioEntity> datosLab = datosLaboratorioService.obtenerDatosLaboratorio();
+        List<DatosLaboratorioEntity> datosLab = datosLaboratorioService.obtenerDatosLaboratorio();
         model.addAttribute("datosLab", datosLab);
         return "informacionLab";
     }

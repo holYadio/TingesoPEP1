@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class DatosLaboratorioService {
@@ -25,11 +25,11 @@ public class DatosLaboratorioService {
 
     private final Logger logg = LoggerFactory.getLogger(DatosLaboratorioService.class);
 
-    public ArrayList<DatosLaboratorioEntity> obtenerDatosLaboratorio() {
-        return (ArrayList<DatosLaboratorioEntity>) datosLaboratorioRepository.findAll();
+    public List<DatosLaboratorioEntity> obtenerDatosLaboratorio() {
+        return (List<DatosLaboratorioEntity>) datosLaboratorioRepository.findAll();
     }
 
-    public ArrayList<DatosLaboratorioEntity> obtenerDatosLaboratorioPorProveedor(String proveedor) {
+    public List<DatosLaboratorioEntity> obtenerDatosLaboratorioPorProveedor(String proveedor) {
         return datosLaboratorioRepository.findByProveedor(proveedor);
     }
 

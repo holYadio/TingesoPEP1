@@ -16,6 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class DatosAcopioService {
@@ -27,21 +28,21 @@ public class DatosAcopioService {
 
     private final Logger logg = LoggerFactory.getLogger(DatosAcopioService.class);
 
-    public ArrayList<DatosAcopioEntity> obtenerDatosAcopio() {
-        return (ArrayList<DatosAcopioEntity>) datosAcopioRepository.findAll();
+    public List<DatosAcopioEntity> obtenerDatosAcopio() {
+        return (List<DatosAcopioEntity>) datosAcopioRepository.findAll();
     }
 
-    public ArrayList<DatosAcopioEntity> obtenerDatosAcopioPorProveedor(String proveedor) {
-        return (ArrayList<DatosAcopioEntity>) datosAcopioRepository.findByProveedor(proveedor);
+    public List<DatosAcopioEntity> obtenerDatosAcopioPorProveedor(String proveedor) {
+        return (List<DatosAcopioEntity>) datosAcopioRepository.findByProveedor(proveedor);
     }
 
     /* Funcion para obtener los acopios asociados a una quincena en especifico
      * @param Quincena: String con el formato "AAAA/MM/Q1" o "AAAA/MM/Q2"
      * @return ArrayList<DatosAcopioEntity> con los datos de los acopios asociados a la quincena
      */
-    public ArrayList<DatosAcopioEntity> obtenerDatosAcopioPorQuincenayProveedor(String Quincena, String proveedor) {
-        ArrayList<DatosAcopioEntity> datosAcopio = (ArrayList<DatosAcopioEntity>) datosAcopioRepository.findAll();
-        ArrayList<DatosAcopioEntity> datosAcopioPorQuincena = new ArrayList<>();
+    public List<DatosAcopioEntity> obtenerDatosAcopioPorQuincenayProveedor(String Quincena, String proveedor) {
+        List<DatosAcopioEntity> datosAcopio = (List<DatosAcopioEntity>) datosAcopioRepository.findAll();
+        List<DatosAcopioEntity> datosAcopioPorQuincena = new ArrayList<>();
         int anioQuincena = Integer.parseInt(Quincena.split("/")[0]);
         int mesQuincena = Integer.parseInt(Quincena.split("/")[1]);
         String numQuincena = Quincena.split("/")[2];
@@ -132,7 +133,7 @@ public class DatosAcopioService {
 
 
 
-    public double KlsTotalLeche(ArrayList<DatosAcopioEntity> datosAcopio){
+    public double KlsTotalLeche(List<DatosAcopioEntity> datosAcopio){
         double KlsTotalLeche = 0;
         for (DatosAcopioEntity datos : datosAcopio) {
             KlsTotalLeche += Integer.parseInt(datos.getKls_leche());
@@ -141,7 +142,7 @@ public class DatosAcopioService {
     }
 
 
-    public double diasEnvioLeche(ArrayList<DatosAcopioEntity> datosAcopio){
+    public double diasEnvioLeche(List<DatosAcopioEntity> datosAcopio){
         double diasEnvioAcopio = 0;
         for (int i = 0; i < (datosAcopio.size()); i++) {
             if(i < (datosAcopio.size() - 1)) {
@@ -177,7 +178,7 @@ public class DatosAcopioService {
         if (quincenaAnterior == null) {
             klsLecheAnterior = klsTotalLeche;
         }else{
-            ArrayList<DatosAcopioEntity> datosAcopioQuincena = this.obtenerDatosAcopioPorQuincenayProveedor(
+            List<DatosAcopioEntity> datosAcopioQuincena = this.obtenerDatosAcopioPorQuincenayProveedor(
                     quincenaAnterior, codigoProveedor);
             klsLecheAnterior = this.KlsTotalLeche(datosAcopioQuincena);
         }

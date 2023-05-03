@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-
+import java.util.List;
 
 
 @Service
@@ -31,8 +31,8 @@ public class PlanillaDePagos {
      * Obtiene todos los pagos
      * @return pagos Lista de pagos
      */
-    public ArrayList<PagoEntity> obtenerPagos(){
-        return (ArrayList<PagoEntity>) pagoRepository.findAll();
+    public List<PagoEntity> obtenerPagos(){
+        return (List<PagoEntity>) pagoRepository.findAll();
     }
 
     /*
@@ -109,7 +109,7 @@ public class PlanillaDePagos {
      * @param pagoAcopioQuincena Cantidad que se le debe pagar al proveedor asociado al acopio de leche
      * @return pago Cantidad que se le debe pagar al proveedor dado su frecuencia de entrega
      */
-    public double calcularBonificacionPorFrecuencia(ArrayList<DatosAcopioEntity> datosAcopioEntity, double pagoAcopioQuincena){
+    public double calcularBonificacionPorFrecuencia(List<DatosAcopioEntity> datosAcopioEntity, double pagoAcopioQuincena){
         double bonificacion = 0;
         int contadorM = 0;
         int contadorT = 0;
@@ -200,7 +200,7 @@ public class PlanillaDePagos {
      * @return pagoFinal Cantidad que se le debe pagar al proveedor
      */
     public void calcularPagoFinal(){
-        ArrayList<DatosLaboratorioEntity> datosLaboratorio = datosLaboratorioService.obtenerDatosLaboratorio();
+        List<DatosLaboratorioEntity> datosLaboratorio = datosLaboratorioService.obtenerDatosLaboratorio();
         String quincena;
         String codigoProveedor;
         String nombreProveedor;
@@ -227,7 +227,7 @@ public class PlanillaDePagos {
             double DctoTotal;
             quincena = datosLaboratorio.get(i).getQuincena();
             codigoProveedor = datosLaboratorio.get(i).getProveedor();
-            ArrayList<DatosAcopioEntity> datosAcopioQuincena = datosAcopioService.obtenerDatosAcopioPorQuincenayProveedor(
+            List<DatosAcopioEntity> datosAcopioQuincena = datosAcopioService.obtenerDatosAcopioPorQuincenayProveedor(
                     quincena, codigoProveedor);
             nombreProveedor = proveedorService.obtenerNombreProveedor(codigoProveedor);
             KlsTotalLeche = datosAcopioService.KlsTotalLeche(datosAcopioQuincena);
