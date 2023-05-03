@@ -8,11 +8,11 @@
 		<version>3.0.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>TINGESO</groupId>
-	<artifactId>Evaluacion1</artifactId>
+	<groupId>tingeso</groupId>
+	<artifactId>monolitico</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Evaluacion1</name>
-	<description>Evaluacion 1 de TINGESO</description>
+	<description>Evaluacion 1 de TINGESO, aplicación monolítica</description>
 	<properties>
 		<java.version>17</java.version>
 		<sonar.exclusions>

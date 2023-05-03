@@ -1,7 +1,7 @@
-package TINGESO.monolitico.Controllers;
+package tingeso.monolitico.controllers;
 
-import TINGESO.monolitico.Entities.PagoEntity;
-import TINGESO.monolitico.Services.PlanillaDePagos;
+import tingeso.monolitico.entities.PagoEntity;
+import tingeso.monolitico.services.PlanillaDePagos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

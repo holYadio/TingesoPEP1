@@ -1,4 +1,4 @@
-package TINGESO.monolitico.Entities;
+package tingeso.monolitico.entities;
 
 import jakarta.persistence.*;
 

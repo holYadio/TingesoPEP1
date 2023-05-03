@@ -1,7 +1,7 @@
-package TINGESO.monolitico.Services;
+package tingeso.monolitico.services;
 
-import TINGESO.monolitico.Entities.DatosLaboratorioEntity;
-import TINGESO.monolitico.Repositories.DatosLaboratorioRepository;
+import tingeso.monolitico.entities.DatosLaboratorioEntity;
+import tingeso.monolitico.repositories.DatosLaboratorioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;

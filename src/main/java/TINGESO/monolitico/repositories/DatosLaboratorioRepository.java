@@ -1,6 +1,6 @@
-package TINGESO.monolitico.Repositories;
+package tingeso.monolitico.repositories;
 
-import TINGESO.monolitico.Entities.DatosLaboratorioEntity;
+import tingeso.monolitico.entities.DatosLaboratorioEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

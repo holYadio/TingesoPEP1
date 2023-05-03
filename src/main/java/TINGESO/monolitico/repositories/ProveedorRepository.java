@@ -1,7 +1,7 @@
-package TINGESO.monolitico.Repositories;
+package tingeso.monolitico.repositories;
 
 
-import TINGESO.monolitico.Entities.ProveedorEntity;
+import tingeso.monolitico.entities.ProveedorEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

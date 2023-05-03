@@ -1,7 +1,7 @@
-package TINGESO.monolitico.Services;
+package tingeso.monolitico.services;
 
-import TINGESO.monolitico.Entities.DatosAcopioEntity;
-import TINGESO.monolitico.Repositories.DatosAcopioRepository;
+import tingeso.monolitico.entities.DatosAcopioEntity;
+import tingeso.monolitico.repositories.DatosAcopioRepository;
 import lombok.Generated;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,5 +1,4 @@
-package TINGESO.monolitico.Entities;
-
+package tingeso.monolitico.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,16 +6,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Data
-@Table(name = "dato_laboratorio")
+@Table(name = "dato_proveedor")
 @NoArgsConstructor
 @AllArgsConstructor
-public class DatosLaboratorioEntity {
+@Data
+public class DatosAcopioEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private String fecha;
+    private String turno;
     private String proveedor;
-    private String porcentaje_grasa;
-    private String porcentaje_solido_total;
-    private String quincena;
+    private String kls_leche;
 }

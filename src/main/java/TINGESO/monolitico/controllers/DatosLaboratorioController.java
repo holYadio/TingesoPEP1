@@ -1,7 +1,7 @@
-package TINGESO.monolitico.Controllers;
+package tingeso.monolitico.controllers;
 
-import TINGESO.monolitico.Entities.DatosLaboratorioEntity;
-import TINGESO.monolitico.Services.DatosLaboratorioService;
+import tingeso.monolitico.entities.DatosLaboratorioEntity;
+import tingeso.monolitico.services.DatosLaboratorioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

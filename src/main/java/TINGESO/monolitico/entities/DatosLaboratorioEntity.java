@@ -1,22 +1,22 @@
-package TINGESO.monolitico.Entities;
+package tingeso.monolitico.entities;
+
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.jetbrains.annotations.NotNull;
 
 @Entity
-@Table(name = "dato_proveedor")
+@Data
+@Table(name = "dato_laboratorio")
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-public class DatosAcopioEntity {
+public class DatosLaboratorioEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String fecha;
-    private String turno;
     private String proveedor;
-    private String kls_leche;
+    private String porcentaje_grasa;
+    private String porcentaje_solido_total;
+    private String quincena;
 }

@@ -1,9 +1,9 @@
-package TINGESO.monolitico.Services;
+package tingeso.monolitico.services;
 
-import TINGESO.monolitico.Entities.DatosAcopioEntity;
-import TINGESO.monolitico.Entities.PagoEntity;
-import TINGESO.monolitico.Entities.ProveedorEntity;
-import TINGESO.monolitico.Repositories.PagoRepository;
+import tingeso.monolitico.entities.DatosAcopioEntity;
+import tingeso.monolitico.entities.PagoEntity;
+import tingeso.monolitico.entities.ProveedorEntity;
+import tingeso.monolitico.repositories.PagoRepository;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

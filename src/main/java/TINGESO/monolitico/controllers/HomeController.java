@@ -1,4 +1,4 @@
-package TINGESO.monolitico.Controllers;
+package tingeso.monolitico.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,6 +1,6 @@
-package TINGESO.monolitico.Repositories;
+package tingeso.monolitico.repositories;
 
-import TINGESO.monolitico.Entities.PagoEntity;
+import tingeso.monolitico.entities.PagoEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
