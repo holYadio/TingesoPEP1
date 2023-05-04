@@ -1,5 +1,6 @@
 package tingeso.monolitico.services;
 
+import lombok.Generated;
 import tingeso.monolitico.entities.DatosAcopioEntity;
 import tingeso.monolitico.entities.DatosLaboratorioEntity;
 import tingeso.monolitico.entities.PagoEntity;
@@ -120,7 +121,7 @@ public class PlanillaDePagos {
                 contadorT++;
             }
         }
-        if(contadorM > 10 && contadorT > 10){
+        if((contadorM > 10) && (contadorT > 10)){
             bonificacion = 20;
         }
         else if(contadorM > 10){
@@ -132,30 +133,29 @@ public class PlanillaDePagos {
         return bonificacion*pagoAcopioQuincena/100;
     }
 
-    public double calcularDescuentoPorVariacionLeche(String quincena, String codigoProveedor, double klsTotalLeche, double pagoAcopioLeche) {
-        double porcentajeVariacionLeche = datosAcopioService.getVariacionLeche(quincena, codigoProveedor, klsTotalLeche);
-        double descuento;
+    public double calcularDescuentoPorVariacionLeche(double porcentajeVariacionLeche, double pagoAcopioLeche) {
+        double descuento=0;
         if ((porcentajeVariacionLeche >= 0) && (porcentajeVariacionLeche <= 8)) {
             descuento = 0;
         } else if ((porcentajeVariacionLeche > 9) && (porcentajeVariacionLeche <= 25)) {
-            descuento = 12;
-        } else if ((porcentajeVariacionLeche > 25) && (porcentajeVariacionLeche <= 40)) {
-            descuento = 20;
-        } else {
+            descuento = 7;
+        } else if ((porcentajeVariacionLeche > 25) && (porcentajeVariacionLeche <= 45)) {
+            descuento = 15;
+        } else if (porcentajeVariacionLeche > 46){
             descuento = 30;
         }
         return  pagoAcopioLeche * descuento / 100;
     }
 
     public double calcularDescuentoPorVariacionGrasa(double porcentajeVariacionGrasa, double pagoAcopioLeche) {
-        double porcentaje;
+        double porcentaje = 0;
         if ((porcentajeVariacionGrasa >= 0) && (porcentajeVariacionGrasa <= 15)) {
             porcentaje = 0;
         } else if ((porcentajeVariacionGrasa > 15) && (porcentajeVariacionGrasa <= 25)) {
             porcentaje = 12;
         } else if ((porcentajeVariacionGrasa > 25) && (porcentajeVariacionGrasa <= 40)) {
             porcentaje = 20;
-        } else {
+        } else if (porcentajeVariacionGrasa > 40){
             porcentaje = 30;
         }
         return  pagoAcopioLeche * porcentaje / 100;
@@ -163,14 +163,14 @@ public class PlanillaDePagos {
 
 
     public double calcularDescuentoPorVariacionSolidosTotales(double porcentajeVariacionSolidoTotal, double pagoAcopioLeche) {
-        double porcentaje;
+        double porcentaje = 0;
         if ((porcentajeVariacionSolidoTotal >= 0) && (porcentajeVariacionSolidoTotal <= 6)) {
             porcentaje = 0;
         } else if ((porcentajeVariacionSolidoTotal > 6) && (porcentajeVariacionSolidoTotal <= 12)) {
             porcentaje = 18;
         } else if ((porcentajeVariacionSolidoTotal > 12) && (porcentajeVariacionSolidoTotal <= 35)) {
             porcentaje = 27;
-        } else {
+        } else if (porcentajeVariacionSolidoTotal > 35){
             porcentaje = 45;
         }
         return pagoAcopioLeche * porcentaje / 100;
@@ -196,6 +196,7 @@ public class PlanillaDePagos {
      * @param datoLaboratorio Objeto que tiene la información de los datos subidos por el laboratorio
      * @return pagoFinal Cantidad que se le debe pagar al proveedor
      */
+    @Generated
     public void calcularPagoFinal(){
         List<DatosLaboratorioEntity> datosLaboratorio = datosLaboratorioService.obtenerDatosLaboratorio();
         String quincena;
@@ -229,7 +230,7 @@ public class PlanillaDePagos {
             nombreProveedor = proveedorService.obtenerNombreProveedor(codigoProveedor);
             klsTotalLeche = datosAcopioService.klsTotalLeche(datosAcopioQuincena);
             diasEnvioLeche = String.valueOf(datosAcopioService.diasEnvioLeche(datosAcopioQuincena));
-            promedioKilosLecheDiario = String.valueOf(klsTotalLeche/15);
+            promedioKilosLecheDiario = String.valueOf(Math.round((klsTotalLeche/15)*1000.0)/1000.0);
             porcentajeFrecuenciaDiariaEnvioLeche = String.valueOf(datosAcopioService.getVariacionLeche(quincena,codigoProveedor,klsTotalLeche));//Preguntar al profe
             porcentajeGrasa = datosLaboratorio.get(i).getPorcentajeGrasa();
             porcentajeVariacionGrasa = datosLaboratorioService.getVariacionGrasa(quincena,
@@ -252,9 +253,7 @@ public class PlanillaDePagos {
                     pagoPorGrasa +
                     pagoPorSolidosTotales +
                     bonificacionPorFrecuencia;
-            dctoVariacionLeche= this.calcularDescuentoPorVariacionLeche(quincena,
-                    codigoProveedor,
-                    klsTotalLeche,
+            dctoVariacionLeche= this.calcularDescuentoPorVariacionLeche(Double.parseDouble(porcentajeFrecuenciaDiariaEnvioLeche),
                     pagoAcopioLeche);
             dctoVariacionGrasa = this.calcularDescuentoPorVariacionGrasa(porcentajeVariacionGrasa,
                     pagoAcopioLeche);

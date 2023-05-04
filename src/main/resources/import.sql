@@ -7,13 +7,13 @@ INSERT INTO proveedor(codigo,nombre,categoria,retencion) VALUES ('00303', 'B Pro
 INSERT INTO proveedor(codigo,nombre,categoria,retencion) VALUES ('00401', 'C Proveedor', 'C', 'No');
 INSERT INTO proveedor(codigo,nombre,categoria,retencion) VALUES ('00402', 'D Proveedor', 'D', 'No');
 
-INSERT INTO dato_proveedor(fecha,turno,proveedor,kls_leche) VALUES ('2023/03/17','M','01003','50');
-INSERT INTO dato_proveedor(fecha,turno,proveedor,kls_leche) VALUES ('2023/03/17','T','01003','100');
+INSERT INTO dato_proveedor(fecha,turno,proveedor,kls_leche) VALUES ('2023/03/10','M','01003','50');
+INSERT INTO dato_proveedor(fecha,turno,proveedor,kls_leche) VALUES ('2023/03/10','T','01003','100');
 INSERT INTO dato_proveedor(fecha,turno,proveedor,kls_leche) VALUES ('2023/03/18','N','01025','35');
 INSERT INTO dato_proveedor(fecha,turno,proveedor,kls_leche) VALUES ('2023/03/18','M','01011','30');
 INSERT INTO dato_proveedor(fecha,turno,proveedor,kls_leche) VALUES ('2023/03/18','T','01078','25');
-INSERT INTO dato_proveedor(fecha,turno,proveedor,kls_leche) VALUES ('2023/03/10','M','01003','50');
-INSERT INTO dato_proveedor(fecha,turno,proveedor,kls_leche) VALUES ('2023/03/11','T','01003','45');
+INSERT INTO dato_proveedor(fecha,turno,proveedor,kls_leche) VALUES ('2023/03/17','M','01003','50');
+INSERT INTO dato_proveedor(fecha,turno,proveedor,kls_leche) VALUES ('2023/03/18','T','01003','50');
 INSERT INTO dato_proveedor(fecha,turno,proveedor,kls_leche) VALUES ('2023/03/12','N','01025','35');
 INSERT INTO dato_proveedor(fecha,turno,proveedor,kls_leche) VALUES ('2023/03/13','M','01011','30');
 INSERT INTO dato_proveedor(fecha,turno,proveedor,kls_leche) VALUES ('2023/03/14','T','01078','25');

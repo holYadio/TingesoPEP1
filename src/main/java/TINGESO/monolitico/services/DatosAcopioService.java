@@ -178,9 +178,10 @@ public class DatosAcopioService {
         }else{
             List<DatosAcopioEntity> datosAcopioQuincena = this.obtenerDatosAcopioPorQuincenayProveedor(
                     quincenaAnterior, codigoProveedor);
-            klsLecheAnterior = this.klsTotalLeche(datosAcopioQuincena);
+            klsLecheAnterior = klsTotalLeche(datosAcopioQuincena);
+
         }
-        double variacion = klsLecheAnterior - klsTotalLeche;
+        double variacion = Math.round((((klsLecheAnterior - klsTotalLeche)*100)/klsLecheAnterior)*10000)/10000.0;
         if (variacion <= 0) {
             variacion = 0;
         }
