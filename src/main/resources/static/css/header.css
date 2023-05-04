@@ -1,0 +1,23 @@
+.header{
+    background-color: #26ade4;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 60px;
+    padding: 10px 2%;
+}
+.header .btnHeader button{
+    margin-left: 20px;
+    font-weight: 700;
+    color: #090909;
+    padding: 5px 10px;
+    border: 2px solid #2866d7;
+    background: #FDFEFE;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+}
+.header .btnHeader button:hover{
+    background-color: #2866d7;
+    color: #FDFEFE;
+    transform: scale(1.15);
+}

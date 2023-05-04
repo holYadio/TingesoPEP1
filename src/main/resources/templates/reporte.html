@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp"
+          crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../static/css/button.css" th:href="@{/css/button.css}">
+    <link rel="stylesheet" type="text/css" href="../static/css/body.css" th:href="@{/css/body.css}">
+    <link rel="stylesheet" type="text/css" href="../static/css/header.css" th:href="@{/css/header.css}">
+    <link rel="stylesheet" type="text/css" href="../static/css/registro.css" th:href="@{/css/registro.css}">
+    <link rel="stylesheet" type="text/css" href="../static/css/table.css" th:href="@{/css/table.css}">
+    <title>Reporte</title>
+</head>
+<body>
+<header class="header">
+    <a class="btnHeader" href="/">
+        <button type="button" class="btn btn-outline-light">
+            Inicio
+        </button>
+    </a>
+</header>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Reporte Planilla de Pagos</h1>
+            <table class="content-table">
+                <thead>
+                <tr>
+                    <th>Quincena</th>
+                    <th>Código Proveedor</th>
+                    <th>Nombre Proveedor</th>
+                    <th>Total Kls de Leche</th>
+                    <th>Nro. días que envío leche</th>
+                    <th>Promedio diario KLS leche</th>
+                    <th>% Variacion Leche</th>
+                    <th>% Grasa</th>
+                    <th>% Variación Grasa</th>
+                    <th>% Sólidos Totales </th>
+                    <th>% Variación Sólidos Totales</th>
+                    <th>Pago por Leche</th>
+                    <th>Pago por Grasa</th>
+                    <th>Pago por Sólidos Totales</th>
+                    <th>Bonificación por Frecuencia</th>
+                    <th>Dcto. Variación Leche</th>
+                    <th>Dcto. Variación Grasa</th>
+                    <th>Dcto. Variación Sólidos Totales</th>
+                    <th>Pago Total</th>
+                    <th>Monto Retención</th>
+                    <th>Monto Final</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="pagos : ${pagos}">
+                    <td th:text="${pagos.quincena}"></td>
+                    <td th:text="${pagos.codigoProveedor}"></td>
+                    <td th:text="${pagos.nombreProveedor}"></td>
+                    <td th:text="${pagos.KlsTotalLeche}"></td>
+                    <td th:text="${pagos.diasEnvioLeche}"></td>
+                    <td th:text="${pagos.PromedioKilosLecheDiario}"></td>
+                    <td th:text="${pagos.PorcentajeFrecuenciaDiariaEnvioLeche}"></td>
+                    <td th:text="${pagos.PorcentajeGrasa}"></td>
+                    <td th:text="${pagos.PorcentajeVariacionGrasa}"></td>
+                    <td th:text="${pagos.PorcentajeSolidoTotal}"></td>
+                    <td th:text="${pagos.PorcentajeVariacionSolidoTotal}"></td>
+                    <td th:text="${pagos.PagoPorLeche}"></td>
+                    <td th:text="${pagos.PagoPorGrasa}"></td>
+                    <td th:text="${pagos.PagoPorSolidosTotales}"></td>
+                    <td th:text="${pagos.BonificacionPorFrecuencia}"></td>
+                    <td th:text="${pagos.DctoVariacionLeche}"></td>
+                    <td th:text="${pagos.DctoVariacionGrasa}"></td>
+                    <td th:text="${pagos.DctoVariacionST}"></td>
+                    <td th:text="${pagos.PagoTotal}"></td>
+                    <td th:text="${pagos.MontoRetencion}"></td>
+                    <td th:text="${pagos.MontoFinal}"></td>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
