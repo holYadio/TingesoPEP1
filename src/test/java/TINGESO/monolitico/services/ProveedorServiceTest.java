@@ -2,6 +2,7 @@ package tingeso.monolitico.services;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import tingeso.monolitico.entities.ProveedorEntity;
 import org.junit.jupiter.api.Test;
@@ -26,7 +27,7 @@ class ProveedorServiceTest {
         ArrayList<ProveedorEntity> proveedores = new ArrayList<>();
         proveedores.add(new ProveedorEntity());
         Mockito.when(proveedorRepository.findAll()).thenReturn(proveedores);
-        ArrayList<ProveedorEntity> proveedoresObtenidos = proveedorService.obtenerProveedores();
+        List<ProveedorEntity> proveedoresObtenidos = proveedorService.obtenerProveedores();
         assertEquals(proveedores, proveedoresObtenidos);
     }
 
