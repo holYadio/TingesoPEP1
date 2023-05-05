@@ -1,5 +1,17 @@
 version: "3.8"
 services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx-proxy
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/nginx/conf.d
+    depends_on:
+      - app1
+      - app2
+      - app3
   db:
     image: postgres:12.14
     container_name: postgresql-db-data
@@ -11,15 +23,46 @@ services:
       - ./data:/var/lib/postgresql
     ports:
       - "5432:5432"
-  app:
-    container_name: pep1tingeso
+
+  app1:
+    container_name: pep1tingeso1
     image: holyadio/pep1tingeso
     ports:
-      - "8090:8090"
+      - "8091:8090"
     environment:
         - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/bdpep1
         - SPRING_DATASOURCE_USERNAME=postgres
         - SPRING_DATASOURCE_PASSWORD=1234
+    deploy:
+      restart_policy:
+        condition: on-failure
+    depends_on:
+      - db
+
+  app2:
+    container_name: pep1tingeso2
+    image: holyadio/pep1tingeso
+    ports:
+      - "8092:8090"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/bdpep1
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=1234
+    deploy:
+      restart_policy:
+        condition: on-failure
+    depends_on:
+      - db
+
+  app3:
+    container_name: pep1tingeso3
+    image: holyadio/pep1tingeso
+    ports:
+      - "8093:8090"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/bdpep1
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=1234
     deploy:
       restart_policy:
         condition: on-failure
