@@ -65,7 +65,7 @@ class DatosAcopioServiceTest {
     }
 
     @Test
-    void obtenerDatosAcopioPorQuincenayProveedor() {
+    void obtenerDatosAcopioPorQuincenaYProveedorCasoA() {
         ArrayList<DatosAcopioEntity> datosAcopio = new ArrayList<>();
         datosAcopio.add(new DatosAcopioEntity(1,"2023/01/01", "M", "01003", "10"));
         datosAcopio.add(new DatosAcopioEntity(2,"2023/02/01", "M", "01003", "20"));
@@ -76,6 +76,24 @@ class DatosAcopioServiceTest {
         expected.add(new DatosAcopioEntity(3,"2023/02/15", "M", "01003", "30"));
         when(repository.findAll()).thenReturn(datosAcopio);
         List<DatosAcopioEntity> result = service.obtenerDatosAcopioPorQuincenayProveedor("2023/02/Q1", "01003");
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void obtenerDatosAcopioPorQuincenaYProveedorCasoB() {
+        ArrayList<DatosAcopioEntity> datosAcopio = new ArrayList<>();
+        datosAcopio.add(new DatosAcopioEntity(1,"2023/01/01", "M", "01003", "10"));
+        datosAcopio.add(new DatosAcopioEntity(2,"2023/02/01", "M", "01003", "20"));
+        datosAcopio.add(new DatosAcopioEntity(3,"2023/02/15", "M", "01003", "30"));
+        datosAcopio.add(new DatosAcopioEntity(4,"2023/03/16", "M", "01003", "40"));
+        datosAcopio.add(new DatosAcopioEntity(5,"2023/03/28", "M", "01003", "50"));
+        datosAcopio.add(new DatosAcopioEntity(6,"2023/03/31", "M", "01003", "60"));
+        ArrayList<DatosAcopioEntity> expected = new ArrayList<>();
+        expected.add(new DatosAcopioEntity(4,"2023/03/16", "M", "01003", "40"));
+        expected.add(new DatosAcopioEntity(5,"2023/03/28", "M", "01003", "50"));
+        expected.add(new DatosAcopioEntity(6,"2023/03/31", "M", "01003", "60"));
+        when(repository.findAll()).thenReturn(datosAcopio);
+        List<DatosAcopioEntity> result = service.obtenerDatosAcopioPorQuincenayProveedor("2023/03/Q2", "01003");
         assertEquals(expected, result);
     }
 

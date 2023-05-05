@@ -1,5 +1,7 @@
 package tingeso.monolitico.services;
 
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import tingeso.monolitico.entities.DatosLaboratorioEntity;
 import tingeso.monolitico.repositories.DatosLaboratorioRepository;
 import org.junit.jupiter.api.Test;
@@ -75,24 +77,37 @@ class DatosLaboratorioServiceTest {
         verify(repository).save(expectedDato);
     }
 
-    @Test
-    void testGetVariacionSolidoTotal() {
-        double resultadoEsperado = 0.0;
-        double resultadoActual = service.getVariacionSolidoTotal("2022/01/Q2", "01003", "50");
-        assertEquals(resultadoEsperado, resultadoActual, "El resultado de getVariacion_solido_total no es el esperado");
+    @ParameterizedTest
+    @CsvSource({
+            "10, 0",
+            "0, 0",
+    })
+    void testGetVariacionSolidoTotal(String solidos, double resultadoEsperado) {
+        service.guardarDatoDB("01003", "10", solidos, "2022/01/Q1");
+        double resultadoActual = service.getVariacionSolidoTotal("2022/01/Q2", "01003", solidos);
+        assertEquals(resultadoEsperado, resultadoActual);
     }
+
+
 
     @Test
     void testGetVariacionGrasa() {
         double resultadoEsperado = 0.0;
         double resultadoActual = service.getVariacionGrasa("2022/01/Q2", "01003", "50");
-        assertEquals(resultadoEsperado, resultadoActual, "El resultado de getVariacion_solido_total no es el esperado");
+        assertEquals(resultadoEsperado, resultadoActual);
     }
 
-    @Test
-    void testQuincenaAnterior(){
-        String resultadoEsperado = "2022/01/Q1";
-        String resultadoActual = service.quincenaAnterior("2022/01/Q2");
-        assertEquals(resultadoEsperado, resultadoActual, "El resultado de quincenaAnterior no es el esperado");
+    @ParameterizedTest
+    @CsvSource({
+            "2022/01/Q2, 2022/01/Q1",
+            "2022/01/Q1, 2021/12/Q2",
+            "2022/03/Q1, 2022/02/Q2",
+            "2022/10/Q1, 2022/09/Q2",
+            "2022/11/Q2, 2022/11/Q1",
+            "2022/12/Q3,  '' ",
+    })
+    void testQuincenaAnterior(String quincena, String resultadoEsperado) {
+        String resultadoActual = service.quincenaAnterior(quincena);
+        assertEquals(resultadoEsperado, resultadoActual);
     }
 }

@@ -107,14 +107,15 @@ public class DatosLaboratorioService {
         String quincenaAnterior = quincenaAnterior(quincenaActual);
         String porcentajeSolidosAnterior;
         try{
-            porcentajeSolidosAnterior = this.obtenerDatosLaboratorioPorProveedorYQuincena(
+            porcentajeSolidosAnterior = obtenerDatosLaboratorioPorProveedorYQuincena(
                     proveedor,
                     quincenaAnterior).getPorcentajeSolidoTotal();
+
             solidosAnterior = Integer.parseInt(porcentajeSolidosAnterior);
         }catch (Exception e){
             solidosAnterior = solidosActual;
         }
-        double variacion = solidosAnterior - solidosActual;
+        double variacion = solidosActual - solidosAnterior;
         if (variacion < 0) {
             variacion = 0;
         }
@@ -136,7 +137,7 @@ public class DatosLaboratorioService {
         }catch (Exception e){
             grasaAnterior = grasaActual;
         }
-        double variacion = grasaAnterior - grasaActual;
+        double variacion = grasaActual - grasaAnterior;
         if (variacion < 0) {
             variacion = 0;
         }
@@ -154,7 +155,8 @@ public class DatosLaboratorioService {
                 mesActual = "12";
             }
             else{
-                if (mesActual.length() == 1) {
+                mesActual = Integer.toString(Integer.parseInt(mesActual));
+                if ((mesActual.length() == 1) || (mesActual.equals("10"))) {
                     mesActual = Integer.toString(Integer.parseInt(mesActual) - 1);
                     mesActual = "0" + mesActual;
                 }else{
