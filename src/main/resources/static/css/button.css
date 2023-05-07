@@ -29,6 +29,8 @@
     transform: scaleX(0) skewX(35deg);
     transform-origin: left;
     transition: transform 0.8s;
+    border: #090909 1px solid;
+
 }
 .button:hover::before{
     transform: scaleX(1) skewX(35deg);

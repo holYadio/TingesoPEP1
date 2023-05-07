@@ -9,8 +9,10 @@
     <link rel="stylesheet" type="text/css" href="../static/css/button.css" th:href="@{/css/button.css}">
     <link rel="stylesheet" type="text/css" href="../static/css/body.css" th:href="@{/css/body.css}">
     <link rel="stylesheet" type="text/css" href="../static/css/header.css" th:href="@{/css/header.css}">
+    <link rel="stylesheet" type="text/css" href="../static/css/section.css" th:href="@{/css/section.css}">
     <title>MilkStgo</title>
     <style>
+
         .boxArea{
             display: flex;
             flex-wrap: wrap;
@@ -78,46 +80,26 @@
         }
     </style>
 </head>
+<header class="header">
+    <h1  style="color: white; justify-content: left"> <b1>MilkStgo</b1></h1>
+</header>
 <body>
-<h1 align = center style="color: white"> <b1>MilkStgo</b1></h1>
-<div class = "boxarea">
-    <div class = "single-box">
-        <a href = "/SubirDatosProveedor">
-            <div class = "img-area">
-            </div>
+<div class="mainClass">
+    <section>
+        <img src="../images/acopio.png" alt="Cargar acopio">
+        <a href = "/SubirDatosProveedor" class="image-link">
+            <img src="../images/acopio.png" alt="Cargar acopio">
         </a>
-        <div class = "img-text">
-            <span class = "header-text"><strong>Cargar Acopio</strong></span>
-        </div>
-    </div>
-    <div class = "single-box">
-        <a href = "/SubirDatosLaboratorio">
-            <div class = "img-area">
-            </div>
+        <a href = "/SubirDatosLaboratorio" class="image-link">
+            <img src="../images/lab.png" alt="Cargar datos del laboratorio">
         </a>
-        <div class = "img-text">
-            <span class = "header-text"><strong>Cargar Datos del Laboratorio</strong></span>
-        </div>
-    </div>
-    <div class = "single-box">
-        <a href = "/obtenerProveedores">
-            <div class = "img-area">
-            </div>
+        <a href = "/obtenerProveedores" class="image-link">
+            <img src="../images/proveedor.png" alt="Obtener proveedores">
         </a>
-        <div class = "img-text">
-            <span class = "header-text"><strong>Ver Proveedores</strong></span>
-        </div>
-    </div>
-    <div class = "single-box">
-        <a href = "/planillaDePagos">
-            <div class = "img-area">
-            </div>
+        <a href = "/obtenerLaboratorios" class="image-link">
+            <img src="../images/reporte.png" alt="Planilla de Pago">
         </a>
-        <div class = "img-text">
-            <span class = "header-text"><strong>Reporte de Planilla de pagos</strong></span>
-        </div>
-    </div>
+    </section>
 </div>
-<h6 align = center style="color: white"> MTINGSW 2023</h6>
 </body>
 </html>
