@@ -8,6 +8,7 @@ section{
     align-items: center;
     width: 500px;
     height: 350px;
+    gap: 35px;
 }
 
 section a {
