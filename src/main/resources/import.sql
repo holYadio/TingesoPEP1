@@ -21,11 +21,11 @@ INSERT INTO dato_proveedor(fecha,turno,proveedor,kls_leche) VALUES ('2023/03/13'
 INSERT INTO dato_proveedor(fecha,turno,proveedor,kls_leche) VALUES ('2023/03/14','T','02004','25');
 
 INSERT INTO dato_laboratorio(proveedor,porcentaje_grasa,porcentaje_solido_total,quincena) VALUES ('01001','25','24','2023/03/Q2');
-INSERT INTO dato_laboratorio(proveedor,porcentaje_grasa,porcentaje_solido_total,quincena) VALUES ('01002','8','11','2023/03/Q2');
+INSERT INTO dato_laboratorio(proveedor,porcentaje_grasa,porcentaje_solido_total,quincena) VALUES ('01002','08','11','2023/03/Q2');
 INSERT INTO dato_laboratorio(proveedor,porcentaje_grasa,porcentaje_solido_total,quincena) VALUES ('01003','30','40','2023/03/Q2');
 INSERT INTO dato_laboratorio(proveedor,porcentaje_grasa,porcentaje_solido_total,quincena) VALUES ('02004','40','27','2023/03/Q2');
 
 INSERT INTO dato_laboratorio(proveedor,porcentaje_grasa,porcentaje_solido_total,quincena) VALUES ('01001','25','14','2023/03/Q1');
-INSERT INTO dato_laboratorio(proveedor,porcentaje_grasa,porcentaje_solido_total,quincena) VALUES ('01002','8','11','2023/03/Q1');
+INSERT INTO dato_laboratorio(proveedor,porcentaje_grasa,porcentaje_solido_total,quincena) VALUES ('01002','08','11','2023/03/Q1');
 INSERT INTO dato_laboratorio(proveedor,porcentaje_grasa,porcentaje_solido_total,quincena) VALUES ('01003','30','50','2023/03/Q1');
 INSERT INTO dato_laboratorio(proveedor,porcentaje_grasa,porcentaje_solido_total,quincena) VALUES ('02004','40','27','2023/03/Q1');
