@@ -115,7 +115,7 @@ public class DatosLaboratorioService {
         }catch (Exception e){
             solidosAnterior = solidosActual;
         }
-        double variacion = solidosActual - solidosAnterior;
+        double variacion = solidosAnterior - solidosActual;
         if (variacion < 0) {
             variacion = 0;
         }
@@ -137,7 +137,7 @@ public class DatosLaboratorioService {
         }catch (Exception e){
             grasaAnterior = grasaActual;
         }
-        double variacion = grasaActual - grasaAnterior;
+        double variacion = grasaAnterior - grasaActual;
         if (variacion < 0) {
             variacion = 0;
         }

@@ -240,30 +240,30 @@ public class PlanillaDePagos {
             porcentajeVariacionSolidoTotal = datosLaboratorioService.getVariacionSolidoTotal(quincena,
                     codigoProveedor,
                     porcentajeSolidoTotal);
-            pagoPorLeche = this.calcularPagoPorCategoria(
+            pagoPorLeche = calcularPagoPorCategoria(
                     proveedorService.obtenerProveedorPorId(codigoProveedor),
                     klsTotalLeche);
-            pagoPorGrasa = this.calcularPagoPorGrasas(porcentajeGrasa,
+            pagoPorGrasa = calcularPagoPorGrasas(porcentajeGrasa,
                     klsTotalLeche);
-            pagoPorSolidosTotales =this.calcularPagoPorSolidosTotales(porcentajeSolidoTotal,
+            pagoPorSolidosTotales = calcularPagoPorSolidosTotales(porcentajeSolidoTotal,
                     klsTotalLeche);
-            bonificacionPorFrecuencia = this.calcularBonificacionPorFrecuencia(datosAcopioQuincena,
+            bonificacionPorFrecuencia = calcularBonificacionPorFrecuencia(datosAcopioQuincena,
                     pagoPorLeche);
             pagoAcopioLeche = pagoPorLeche +
                     pagoPorGrasa +
                     pagoPorSolidosTotales +
                     bonificacionPorFrecuencia;
-            dctoVariacionLeche= this.calcularDescuentoPorVariacionLeche(Double.parseDouble(porcentajeFrecuenciaDiariaEnvioLeche),
+            dctoVariacionLeche= calcularDescuentoPorVariacionLeche(Double.parseDouble(porcentajeFrecuenciaDiariaEnvioLeche),
                     pagoAcopioLeche);
-            dctoVariacionGrasa = this.calcularDescuentoPorVariacionGrasa(porcentajeVariacionGrasa,
+            dctoVariacionGrasa = calcularDescuentoPorVariacionGrasa(porcentajeVariacionGrasa,
                     pagoAcopioLeche);
-            dctoVariacionST= this.calcularDescuentoPorVariacionSolidosTotales(porcentajeVariacionSolidoTotal,
+            dctoVariacionST= calcularDescuentoPorVariacionSolidosTotales(porcentajeVariacionSolidoTotal,
                     pagoAcopioLeche);
             dctoTotal = dctoVariacionLeche +
                     dctoVariacionGrasa +
                     dctoVariacionST;
             pagoTotal = pagoAcopioLeche - dctoTotal;
-            montoRetencion= this.calcularRetencion(pagoTotal);
+            montoRetencion= calcularRetencion(pagoTotal);
             montoFinal = String.valueOf(pagoTotal - montoRetencion);
             guardarPagoDB(quincena,
                     codigoProveedor,
