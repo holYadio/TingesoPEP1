@@ -36,8 +36,9 @@ public class DatosAcopioService {
         return datosAcopioRepository.findByProveedor(proveedor);
     }
 
-    /* Funcion para obtener los acopios asociados a una quincena en especifico
-     * @param Quincena: String con el formato "AAAA/MM/Q1" o "AAAA/MM/Q2"
+    /** Funcion para obtener los acopios asociados a una quincena en especifico
+     * @param quincena: String con el formato "AAAA/MM/Q1" o "AAAA/MM/Q2"
+     * @param proveedor: String con el nombre del proveedor
      * @return ArrayList<DatosAcopioEntity> con los datos de los acopios asociados a la quincena
      */
     public List<DatosAcopioEntity> obtenerDatosAcopioPorQuincenayProveedor(String quincena, String proveedor) {
@@ -63,6 +64,11 @@ public class DatosAcopioService {
         return datosAcopioPorQuincena;
     }
 
+    /**
+     * Funcion para obtener los acopios asociados a una quincena en especifico
+     * @param file
+     * @return
+     */
     @Generated
     public String guardarDatosProveedor(MultipartFile file){
         String filename = file.getOriginalFilename();
@@ -86,6 +92,10 @@ public class DatosAcopioService {
         }
     }
 
+    /**
+     * Funcion para leer el archivo de acopio
+     * @param direccion
+     */
     @Generated
     public void leerCsvProveedor(String direccion){
         BufferedReader br = null;
@@ -120,6 +130,13 @@ public class DatosAcopioService {
         }
     }
 
+    /**
+     * Funcion para guardar los datos de acopio en la base de datos
+     * @param fecha
+     * @param turno
+     * @param proveedor
+     * @param klsLeche
+     */
     public void guardarDatoProveedorDB(String fecha, String turno, String proveedor, String klsLeche){
         DatosAcopioEntity newDato = new DatosAcopioEntity();
         newDato.setFecha(fecha);
@@ -129,8 +146,11 @@ public class DatosAcopioService {
         datosAcopioRepository.save(newDato);
     }
 
-
-
+    /**
+     * Funcion para obtener el total de kls de leche de un proveedor
+     * @param datosAcopio
+     * @return
+     */
     public double klsTotalLeche(List<DatosAcopioEntity> datosAcopio){
         double klsTotalLeche = 0;
         for (DatosAcopioEntity datos : datosAcopio) {
@@ -139,7 +159,11 @@ public class DatosAcopioService {
         return klsTotalLeche;
     }
 
-
+    /**
+     * Funcion para obtener el total de dias de envio de leche de un proveedor
+     * @param datosAcopio
+     * @return
+     */
     public double diasEnvioLeche(List<DatosAcopioEntity> datosAcopio){
         double diasEnvioAcopio = 0;
         int i = 0;
@@ -170,6 +194,13 @@ public class DatosAcopioService {
         return diasEnvioAcopio;
     }
 
+    /**
+     * Funcion para obtener el promedio de kls de leche de un proveedor
+     * @param quincena
+     * @param codigoProveedor
+     * @param klsTotalLeche
+     * @return
+     */
     public double getVariacionLeche(String quincena, String codigoProveedor, double klsTotalLeche) {
         double klsLecheAnterior;
         String quincenaAnterior = datosLaboratorioService.quincenaAnterior(quincena);

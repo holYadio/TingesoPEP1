@@ -25,18 +25,38 @@ public class DatosLaboratorioService {
 
     private final Logger logg = LoggerFactory.getLogger(DatosLaboratorioService.class);
 
+    /**
+     * Funcion para obtener todos los datos de los laboratorios
+     * @return
+     */
     public List<DatosLaboratorioEntity> obtenerDatosLaboratorio() {
         return datosLaboratorioRepository.findAll();
     }
 
+    /**
+     * Funcion para obtener los datos de los laboratorios asociados a un proveedor
+     * @param proveedor: String con el nombre del proveedor
+     * @return
+     */
     public List<DatosLaboratorioEntity> obtenerDatosLaboratorioPorProveedor(String proveedor) {
         return datosLaboratorioRepository.findByProveedor(proveedor);
     }
 
+    /**
+     * Funcion para obtener los datos de los laboratorios asociados a una quincena
+     * @param quincena: String con la quincena
+     * @param proveedor: String con el codigo del proveedor
+     * @return
+     */
     public DatosLaboratorioEntity obtenerDatosLaboratorioPorProveedorYQuincena(String proveedor, String quincena) {
         return datosLaboratorioRepository.findByProveedorAndQuincena(proveedor, quincena);
     }
 
+    /**
+     * Funcion guardar los datos de los laboratorios
+     * @param file: String con la quincena
+     * @return
+     */
     @Generated
     public String guardarDatosLab(MultipartFile file){
         String fileName = file.getOriginalFilename();
@@ -59,6 +79,11 @@ public class DatosLaboratorioService {
         }
     }
 
+    /**
+     * Funcion para leer los datos de los laboratorios
+     * @param direccion: String con la direccion del archivo
+     * @param quincena: String con la quincena
+     */
     @Generated
     public void leerCsv(String direccion, String quincena){
         BufferedReader bf = null;
@@ -90,6 +115,14 @@ public class DatosLaboratorioService {
         }
     }
 
+    /**
+     * Funcion para guardar los datos de los laboratorios en la base de datos
+     * @param quincena: String con la quincena
+     * @param proveedor: String con el nombre del proveedor
+     * @param porcentajeGrasa: String con el porcentaje de grasa
+     * @param porcentajeSolidoTotal: String con el porcentaje de solidos totales
+     * @return
+     */
     public void guardarDatoDB(String proveedor, String porcentajeGrasa, String porcentajeSolidoTotal, String quincena){
         DatosLaboratorioEntity newData = new DatosLaboratorioEntity();
         newData.setProveedor(proveedor);
@@ -99,6 +132,13 @@ public class DatosLaboratorioService {
         datosLaboratorioRepository.save(newData);
     }
 
+    /**
+     * Funcion para obtener la variacion de solidos totales
+     * @param quincenaActual: String con la quincena
+     * @param proveedor: String con el codigo del proveedor
+     * @param porcentajeSolidos: String con el porcentaje de solidos
+     * @return
+     */
     public double getVariacionSolidoTotal(String quincenaActual,
                                              String proveedor,
                                              String porcentajeSolidos) {
@@ -122,6 +162,13 @@ public class DatosLaboratorioService {
         return variacion;
     }
 
+    /**
+     * Funcion para obtener la variacion de grasa
+     * @param quincenaActual
+     * @param proveedor
+     * @param porcentajeGrasa
+     * @return
+     */
     public double getVariacionGrasa(String quincenaActual,
                                       String proveedor,
                                       String porcentajeGrasa) {
@@ -144,6 +191,11 @@ public class DatosLaboratorioService {
         return variacion;
     }
 
+    /**
+     * Funcion para obtener la quincena anterior
+     * @param quincena
+     * @return
+     */
     public String quincenaAnterior(String quincena){
         String quincenaAnterior = "";
         String anioActual= quincena.split("/")[0];
